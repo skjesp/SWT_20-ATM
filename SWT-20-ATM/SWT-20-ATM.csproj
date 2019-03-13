@@ -46,6 +46,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Decoder.cs" />
+    <Compile Include="IDecoder.cs" />
+    <Compile Include="Plane.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="TransponderReceiverClient.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
