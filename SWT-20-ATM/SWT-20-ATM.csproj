@@ -51,6 +51,9 @@
     <Compile Include="IDecoder.cs" />
     <Compile Include="ILogger.cs" />
     <Compile Include="Plane.cs" />
+    <Compile Include="Airspace.cs" />
+    <Compile Include="cuboid.cs" />
+    <Compile Include="IShape.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="SeparationChecker.cs" />
     <Compile Include="Separation.cs" />
