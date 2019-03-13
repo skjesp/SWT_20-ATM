@@ -46,6 +46,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Airspace.cs" />
+    <Compile Include="cuboid.cs" />
+    <Compile Include="IShape.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="TransponderReceiverClient.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
