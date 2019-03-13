@@ -50,6 +50,8 @@
     <Compile Include="IDecoder.cs" />
     <Compile Include="Plane.cs" />
     <Compile Include="Program.cs" />
+    <Compile Include="SeparationChecker.cs" />
+    <Compile Include="Seperation.cs" />
     <Compile Include="TransponderReceiverClient.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
