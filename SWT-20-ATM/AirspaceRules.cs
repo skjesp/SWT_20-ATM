@@ -6,10 +6,16 @@ using System.Threading.Tasks;
 
 namespace SWT_20_ATM
 {
-    class AirspaceRules : IAirspaceRules
+    public class AirspaceRules : IAirspaceRules
     {
         //TODO: Make restrictions on set
-        public int MaxVerticalDistance { private set; get; }
+        private int _MaxVerticalDistance;
+
+        public int MaxVerticalDistance
+        {
+            private set { _MaxVerticalDistance = value;}
+            get { return _MaxVerticalDistance; }
+        }
         public int MaxHorizontalDistance { private set; get; }
 
         public void SetDistanceRule(int distance, int height)

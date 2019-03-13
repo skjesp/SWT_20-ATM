@@ -46,6 +46,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AirspaceRules.cs" />
+    <Compile Include="IAirspaceRules.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="TransponderReceiverClient.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

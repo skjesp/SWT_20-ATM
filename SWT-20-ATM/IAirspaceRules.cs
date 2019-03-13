@@ -8,5 +8,6 @@ namespace SWT_20_ATM
 {
     interface IAirspaceRules
     {
+        void SetDistanceRule(int distance, int height);
     }
 }
