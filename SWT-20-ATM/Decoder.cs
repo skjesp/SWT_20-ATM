@@ -19,6 +19,8 @@ namespace SWT_20_ATM
                 
                 decoderList.Add(tempPlane);
 
+                // insert ATM newDate call
+
             }
         }
     }

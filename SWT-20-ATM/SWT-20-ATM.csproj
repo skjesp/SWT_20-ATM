@@ -47,11 +47,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Decoder.cs" />
+    <Compile Include="FileLogger.cs" />
     <Compile Include="IDecoder.cs" />
+    <Compile Include="ILogger.cs" />
     <Compile Include="Plane.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="SeparationChecker.cs" />
-    <Compile Include="Seperation.cs" />
+    <Compile Include="Separation.cs" />
     <Compile Include="TransponderReceiverClient.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
