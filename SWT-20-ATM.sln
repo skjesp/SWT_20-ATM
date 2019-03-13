@@ -5,6 +5,8 @@ VisualStudioVersion = 15.0.28307.329
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SWT-20-ATM", "SWT-20-ATM\SWT-20-ATM.csproj", "{12602BCA-0493-4218-BCBF-9FA74DDBEB80}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SWT_20-ATM.Test.Unit", "SWT_20-ATM.Test.Unit\SWT_20-ATM.Test.Unit.csproj", "{20E0EFC1-B233-4486-9C1C-3C2308785635}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{12602BCA-0493-4218-BCBF-9FA74DDBEB80}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{12602BCA-0493-4218-BCBF-9FA74DDBEB80}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{12602BCA-0493-4218-BCBF-9FA74DDBEB80}.Release|Any CPU.Build.0 = Release|Any CPU
+		{20E0EFC1-B233-4486-9C1C-3C2308785635}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{20E0EFC1-B233-4486-9C1C-3C2308785635}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{20E0EFC1-B233-4486-9C1C-3C2308785635}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{20E0EFC1-B233-4486-9C1C-3C2308785635}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
