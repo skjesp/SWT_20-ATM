@@ -13,6 +13,7 @@ namespace SWT_20_ATM
     {
         static void Main(string[] args)
         {
+            
             // Using the real transponder data receiver
             var receiver = TransponderReceiverFactory.CreateTransponderDataReceiver();
 
@@ -22,6 +23,8 @@ namespace SWT_20_ATM
             // Let the real TDR execute in the background
             while (true)
                 Thread.Sleep(1000);
+
+            
         }
     }
 }
