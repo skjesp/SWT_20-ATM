@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SWT_20_ATM
 {
-    interface IShape
+    public interface IShape
     {
         bool ContainsPoint(int x, int y, int z);
     }

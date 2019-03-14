@@ -36,7 +36,7 @@ namespace SWT_20_ATM
 
             int maxY = (y_1 < y_2) ? y_2 : y_1;
             int minY = (y_1 > y_2) ? y_2 : y_1;
-
+             
             int maxZ = (z_1 < z_2) ? z_2 : z_1;
             int minZ = (z_1 > z_2) ? z_2 : z_1;
 
