@@ -45,7 +45,7 @@ namespace SWT_20_ATM
             if (y < minY || y > maxY) return false;
             if (z < minZ || z > maxZ) return false;
 
-            return false;
+            return true;
         }
     }
 }

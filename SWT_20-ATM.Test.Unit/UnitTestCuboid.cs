@@ -6,30 +6,33 @@ using Assert = Microsoft.VisualStudio.TestTools.UnitTesting.Assert;
 
 namespace SWT_20_ATM.Test.Unit
 {
-    [TestFixture(0,  0,  0,  10, 10, 10)]
-    [TestFixture(10, 10, 10, 0,  0,  0)]
+    [TestFixture]
     public class UnitTestCuboid
     {
-        private int x1;
-        private int y1;
-        private int z1;
+        [TestCase(0,   0,   0, true)]     // Test point on the corner 1
+        [TestCase(0,   0,  10, true)]     // Test point on the corner 2
+        [TestCase(0,  10,   0, true)]     // Test point on the corner 3
+        [TestCase(0,  10,  10, true)]     // Test point on the corner 4
+        [TestCase(10,  0,   0, true)]     // Test point on the corner 5
+        [TestCase(10,  0,  10, true)]     // Test point on the corner 6
+        [TestCase(10,  10,  0, true)]     // Test point on the corner 7
+        [TestCase(10,  10, 10, true)]     // Test point on the corner 8
 
-        private int x2;
-        private int y2;
-        private int z2;
+        [TestCase(5,   5,   5, true)]     // Test point in the middle
 
-        private Cuboid uut;
+        [TestCase(-5,   5,  5, false)]     // Test point in the outside X-
+        [TestCase(15,  -5,  5, false)]     // Test point in the outside X+
 
-        [SetUp]
-        public void Init()
+        [TestCase(5,   -5,  5, false)]     // Test point in the outside y-
+        [TestCase(5,   15,  5, false)]     // Test point in the outside y+
+
+        [TestCase(5,    5, -5, false)]     // Test point in the outside z-
+        [TestCase(5,    5, 15, false)]     // Test point in the outside z+
+        public void CuboidContains_Points(int x, int y, int z, bool result)
         {
-            uut = new Cuboid(x1,y1,z1, x2,y2,z2);
-        }
+            Cuboid uut = new Cuboid(0, 0, 0, 10, 10, 10);
 
-        [TestCase(0, 0, 0, false)]
-        public void TestMethod1(int x, int y, int z, bool result)
-        {
-            //Assert.Equals(result, Is.EqualTo(uut.ContainsPoint(x, y, z)));
+            Assert.AreEqual(result, uut.ContainsPoint(x, y, z));
         }
         
     }
