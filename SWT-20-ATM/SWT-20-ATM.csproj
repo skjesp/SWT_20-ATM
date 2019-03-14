@@ -48,6 +48,7 @@
   <ItemGroup>
     <Compile Include="Airspace.cs" />
     <Compile Include="AirspaceRules.cs" />
+    <Compile Include="Calculator.cs" />
     <Compile Include="Cuboid.cs" />
     <Compile Include="Decoder.cs" />
     <Compile Include="FileLogger.cs" />

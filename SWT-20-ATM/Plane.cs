@@ -2,21 +2,38 @@
 
 namespace SWT_20_ATM
 {
-    public class Plane
+    public class Plane : Calculator
     {
-        public Plane(string tag, int xCor, int yCor, int alti, DateTime time)
+        public Plane(string _tag, int _xCor, int _yCor, int _altitude, DateTime _time)
         {
-            Tag = tag;
-            xCoordinate = xCor;
-            yCoordinate = yCor;
-            altitude = alti;
+            Tag = _tag;
+            xCoordinate = _xCor;
+            yCoordinate = _yCor;
+            altitude = _altitude;
         }
         public string Tag;
         public int xCoordinate;
         public int yCoordinate;
         public int altitude;
-        public float speed;
-        public float direction;
+        public double speed;
+        public double direction;
         public DateTime lastUpdate;
+
+        public bool Update(Plane newPlane)
+        {
+            // Do not update if tags doesn't match
+            if (this.Tag != newPlane.Tag) return false;
+
+            // Can't update with a old plane record
+            if (this.lastUpdate > newPlane.lastUpdate) return false;
+
+            // Calculate direction
+            speed = getDirection2D(xCoordinate, yCoordinate, newPlane.xCoordinate, newPlane.yCoordinate)
+            
+            // Calculate speed
+
+
+            return true;
+        }
     }
 }
