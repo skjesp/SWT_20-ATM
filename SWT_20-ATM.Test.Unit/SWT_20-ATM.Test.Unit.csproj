@@ -58,6 +58,7 @@
     <Compile Include="UnitTestCalculator.cs" />
     <Compile Include="UnitTestAirspace.cs" />
     <Compile Include="UnitTestCuboid.cs" />
+    <Compile Include="UnitTestPlaneSeparation.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
