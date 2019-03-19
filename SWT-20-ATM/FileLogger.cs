@@ -2,6 +2,7 @@
 
 namespace SWT_20_ATM
 {
+    /*
     public class FileLogger : ILogger
     {
         public void AddToLog(Separation SepToLog)
@@ -9,4 +10,5 @@ namespace SWT_20_ATM
             SepToLog.Write();
         }
     }
+    */
 }
