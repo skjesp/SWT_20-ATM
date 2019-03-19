@@ -28,7 +28,7 @@ namespace SWT_20_ATM
             if (this.lastUpdate > newPlane.lastUpdate) return false;
 
             // Calculate direction
-            speed = getDirection2D(xCoordinate, yCoordinate, newPlane.xCoordinate, newPlane.yCoordinate);
+            speed = GetDirection2D(xCoordinate, yCoordinate, newPlane.xCoordinate, newPlane.yCoordinate);
             
             // Calculate speed
 
