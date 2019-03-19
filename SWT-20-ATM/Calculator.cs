@@ -6,15 +6,18 @@ using System.Threading.Tasks;
 
 namespace SWT_20_ATM
 {
-    public class Calculator
+    public class Calculator : System.Exception
     {
+
         public double GetDirection2D(int x1, int y1, int x2, int y2)
         {
-            int dx = x2 - x1;
-            int dy = y2 - y1;
+            int dx = x1 - y2;
+            int dy = x2 - y1;
             double radians = Math.Atan2(dy, dx);
-            double degrees = radians * 180 / Math.PI;
+            double degrees = radians * 180 / (Math.PI);
             degrees += 180;
+            degrees = 360 - degrees;
+
             return degrees;
         }
 
@@ -31,6 +34,8 @@ namespace SWT_20_ATM
         {
             // Get seconds difference between dates
             double secondDif = date2.Subtract(date1).TotalSeconds;
+
+            if (secondDif == 0.0) throw new System.ArgumentException("Time Difference can't be 0", "date1, date2");
 
             // Calculate distance between coordinates (Meters)
             double distance = this.GetDistance(x1, y1, x2, y2);
