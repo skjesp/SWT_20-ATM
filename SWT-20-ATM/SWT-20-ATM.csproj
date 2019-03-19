@@ -47,24 +47,25 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Airspace.cs" />
-    <Compile Include="AirspaceRules.cs" />
+    <Compile Include="ATM.cs" />
     <Compile Include="Calculator.cs" />
     <Compile Include="Cuboid.cs" />
     <Compile Include="Decoder.cs" />
     <Compile Include="FileLogger.cs" />
-    <Compile Include="IAirspaceRules.cs" />
     <Compile Include="IDecoder.cs" />
     <Compile Include="ILogger.cs" />
+    <Compile Include="IRendition.cs" />
     <Compile Include="IShape.cs" />
+    <Compile Include="Konsol.cs" />
     <Compile Include="Plane.cs" />
+    <Compile Include="PlaneSeparation.cs" />
     <Compile Include="Program.cs" />
-    <Compile Include="Separation.cs" />
-    <Compile Include="SeparationChecker.cs" />
     <Compile Include="TransponderReceiverClient.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="ClassDiagram1.cd" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
