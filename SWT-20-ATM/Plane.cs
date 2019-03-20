@@ -26,13 +26,23 @@ namespace SWT_20_ATM
 
             // Can't update with a old plane record
             if (this.lastUpdate > newPlane.lastUpdate) return false;
-
-            // Calculate direction
-            speed = GetDirection2D(xCoordinate, yCoordinate, newPlane.xCoordinate, newPlane.yCoordinate);
             
-            // Calculate speed
+            // Calculate direction
+            direction = GetDirection2D(xCoordinate, yCoordinate, newPlane.xCoordinate, newPlane.yCoordinate);
 
+            try
+            {
+                // Calculate speed
+                speed = GetSpeed(xCoordinate, yCoordinate, lastUpdate,
+                                 newPlane.xCoordinate, newPlane.yCoordinate, newPlane.lastUpdate);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return false;
+            }
 
+            lastUpdate = newPlane.lastUpdate;
             return true;
         }
     }
