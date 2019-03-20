@@ -9,14 +9,6 @@ namespace SWT_20_ATM.Test.Unit
     [TestFixture]
     public class UnitTestCalculator
     {
-        public Calculator uut;
-
-        [SetUp]
-        public void Init()
-        {
-            uut = new Calculator();
-        }
-
         [TestCase(  0,  0,  0,   10,   0.0)]        // 0  degrees (North)
         [TestCase(  0,  0,  10,  10,  45.0)]        // 45 degrees (North East)
         [TestCase(  0,  0,  10,   0,  90.0)]        // 90 degrees (East)
@@ -27,7 +19,7 @@ namespace SWT_20_ATM.Test.Unit
         [TestCase(  0,  0, -10,  10, 315.0)]        // 315 degrees(North West)
         public void Calculate_GetDirection_returns_CorrectDirection(int x1, int y1, int x2, int y2, double result)
         {
-            double degrees = uut.GetDirection2D(x1, y1, x2, y2);
+            double degrees = Calculator.GetDirection2D(x1, y1, x2, y2);
             Assert.AreEqual( result, degrees);
         }
 
@@ -42,7 +34,7 @@ namespace SWT_20_ATM.Test.Unit
         [TestCase(-10,   0,   0,   0,   10.0)]        
         public void Calculate_GetDistance_returns_CorrectDistance(int x1, int y1, int x2, int y2, double result)
         {
-            double distance = uut.GetDistance(x1, y1, x2,y2);
+            double distance = Calculator.GetDistance(x1, y1, x2,y2);
             Assert.AreEqual(result, distance);
         }
 
@@ -58,7 +50,7 @@ namespace SWT_20_ATM.Test.Unit
             DateTime date1 = DateTime.Parse(dateStr1);
             DateTime date2 = DateTime.Parse(dateStr2);
             
-            double speed = uut.GetSpeed(x1, y1, date1, x2, y2, date2);
+            double speed = Calculator.GetSpeed(x1, y1, date1, x2, y2, date2);
             Assert.AreEqual(result, speed);
         }
 
@@ -78,7 +70,7 @@ namespace SWT_20_ATM.Test.Unit
             DateTime date1 = DateTime.Parse("00:04:00");
             DateTime date2 = DateTime.Parse("00:04:00");
 
-            Assert.ThrowsException<ArgumentException>(() =>uut.GetSpeed(x1, y1, date1, x2, y2, date2));
+            Assert.ThrowsException<ArgumentException>(() => Calculator.GetSpeed(x1, y1, date1, x2, y2, date2));
         }
 
     }

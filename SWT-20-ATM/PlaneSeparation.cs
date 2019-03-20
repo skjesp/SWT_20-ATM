@@ -7,52 +7,49 @@ namespace SWT_20_ATM
 {
     public class PlaneSeparation
     {
-        private int _MinVerticalDistance = 0;
-        private int _MinHorizontalDistance = 0;
+        private int _minVerticalDistance = 0;
+        private int _minHorizontalDistance = 0;
+        
 
-        Calculator Calc = new Calculator();
-
-        public PlaneSeparation(int H, int V)
+        public PlaneSeparation(int h, int v)
         {
-            SetDistance(H,V);
+            SetDistance(h,v);
         }
 
-        public void SetDistance(int H, int V)
+        public void SetDistance(int h, int v)
         {
-            _MinHorizontalDistance = H;
-            _MinVerticalDistance = V;
+            _minHorizontalDistance = h;
+            _minVerticalDistance = v;
         }
 
-        public List<List<Plane>> CheckPlanes(List<Plane> PlaneList)
+        public List<List<Plane>> CheckPlanes(List<Plane> planeList)
         {
-            List<List<Plane>> ViolatingPlanes = new List<List<Plane>>();
+            List<List<Plane>> violatingPlanes = new List<List<Plane>>();
 
-            foreach (var Plane in PlaneList)
+            foreach (var Plane in planeList)
             {
-                int XCoordinateToCompare = Plane.xCoordinate;
-                int YCoordinateToCompare = Plane.yCoordinate;
-
-                foreach (var ComparePlane in PlaneList)
+                foreach (var comparePlane in planeList)
                 {
-                    if (Plane.Tag != ComparePlane.Tag)
+                    if (Plane.Tag == comparePlane.Tag) continue;    // Do nothing if plane being compared is the same
+
+                    double horizontalDifference = Calculator.GetDistance(Plane.xCoordinate, Plane.yCoordinate, comparePlane.xCoordinate, comparePlane.yCoordinate);
+                    int verticalDifference = Math.Abs(Plane.altitude - comparePlane.altitude);
+
+                    if (horizontalDifference >= _minHorizontalDistance) continue;   // Do nothing if horizontal difference is large enough
+                    if (verticalDifference   >= _minVerticalDistance)   continue;   // Do nothing if vertical   difference is large enough
+
+                    // Create plane pair
+                    List<Plane> violatingPlanePair = new List<Plane>
                     {
-                        double HorizontalDifference = Calc.GetDistance(Plane.xCoordinate, Plane.yCoordinate, ComparePlane.xCoordinate, ComparePlane.yCoordinate);
+                        Plane,
+                        comparePlane
+                    };
 
-                        int VerticalDifference = Math.Abs(Plane.altitude - ComparePlane.altitude);
+                    violatingPlanes.Add(violatingPlanePair);
 
-                        //Check if there is a violation.
-                        if ((HorizontalDifference < _MinHorizontalDistance) && (VerticalDifference < _MinVerticalDistance))
-                        {
-                            List<Plane> ViolatingPlanePair = new List<Plane>();
-                            ViolatingPlanePair.Add(Plane);
-                            ViolatingPlanePair.Add(ComparePlane);
-                            ViolatingPlanes.Add(ViolatingPlanePair);
-                        }
-                    }
-                    
                 }
             }
-            return ViolatingPlanes;
+            return violatingPlanes;
         }
     }
 }
