@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using NUnit.Framework;
+using Assert = Microsoft.VisualStudio.TestTools.UnitTesting.Assert;
 
 namespace SWT_20_ATM.Test.Unit
 {
@@ -56,5 +57,18 @@ namespace SWT_20_ATM.Test.Unit
             Assert.IsTrue(uut.Update(newPlane));
         }
 
+        /// <summary>
+        /// Test if update returns false if invalid arguments is given.
+        /// </summary>
+        [TestCase]
+        public void Update_InvalidSpeed_throwException()
+        {
+            Plane newPlane = uut;
+
+            //newplane has flewn 1 meter  on the xCoordinate.
+            newPlane.xCoordinate = newPlane.xCoordinate + 1;
+
+            Assert.IsFalse(uut.Update(newPlane));
+        }
     }
 }

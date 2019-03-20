@@ -2,7 +2,7 @@
 
 namespace SWT_20_ATM
 {
-    public class Plane : Calculator
+    public class Plane
     {
         public Plane(string _tag, int _xCor, int _yCor, int _altitude, DateTime _time)
         {
@@ -29,12 +29,12 @@ namespace SWT_20_ATM
             if (this.lastUpdate > newPlane.lastUpdate) return false;
             
             // Calculate direction
-            direction = GetDirection2D(xCoordinate, yCoordinate, newPlane.xCoordinate, newPlane.yCoordinate);
+            direction = Calculator.GetDirection2D(xCoordinate, yCoordinate, newPlane.xCoordinate, newPlane.yCoordinate);
 
             try
             {
                 // Calculate speed
-                speed = GetSpeed(xCoordinate, yCoordinate, lastUpdate,
+                speed = Calculator.GetSpeed(xCoordinate, yCoordinate, lastUpdate,
                                  newPlane.xCoordinate, newPlane.yCoordinate, newPlane.lastUpdate);
             }
             catch (Exception e)

@@ -3,14 +3,14 @@
   <Class Name="SWT_20_ATM.ATM">
     <Position X="1.5" Y="1.75" Width="4" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>BAAAAAAEAAAAIAAAAAAAAABBAAAAAAAAACAAAAAAAAA=</HashCode>
       <FileName>ATM.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="SWT_20_ATM.PlaneSeparation">
     <Position X="7" Y="2" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAEAAAAAAAAAAIAAAAAQAAAAAEAAAAAAAAAAA=</HashCode>
       <FileName>PlaneSeparation.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -22,7 +22,7 @@
     </TypeIdentifier>
   </Class>
   <Interface Name="SWT_20_ATM.IRendition">
-    <Position X="3.25" Y="3.25" Width="1.5" />
+    <Position X="7.25" Y="4.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>IRendition.cs</FileName>

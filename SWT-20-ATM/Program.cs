@@ -14,7 +14,6 @@ namespace SWT_20_ATM
         static void Main(string[] args)
         {
             
-
             // Using the real transponder data receiver
             var receiver = TransponderReceiverFactory.CreateTransponderDataReceiver();
 
