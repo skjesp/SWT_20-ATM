@@ -10,6 +10,7 @@ namespace SWT_20_ATM
             xCoordinate = _xCor;
             yCoordinate = _yCor;
             altitude = _altitude;
+            lastUpdate = _time;
         }
         public string Tag;
         public int xCoordinate;
