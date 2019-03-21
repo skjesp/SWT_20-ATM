@@ -15,20 +15,6 @@ namespace SWT_20_ATM.Test.Unit
         private Plane CorrectPlane;
         private DateTime CorrectDateTime;
 
-
-        //public override bool Equals(object obj)
-        //{
-        //    if (obj == null || this.GetType() != obj.GetType())
-        //    {
-        //        return false;
-        //    }
-
-        //    Plane otherObj = obj as Plane;
-
-        //    return (this.uut.decoderList[0].xCoordinate == otherObj.xCoordinate) &&
-        //           (this.uut.decoderList[0].yCoordinate == otherObj.yCoordinate);
-        //}
-
         [SetUp]
         public void init()
         {
