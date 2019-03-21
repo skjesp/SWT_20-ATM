@@ -20,6 +20,10 @@ namespace SWT_20_ATM
             // Dependency injection with the real TDR
             var system = new TransponderReceiverClient(receiver);
 
+            Decoder myDecoder = new Decoder();
+
+            system.NewPlanesEvent += myDecoder.Decode;
+
             // Let the real TDR execute in the background
             while (true)
                 Thread.Sleep(1000);
