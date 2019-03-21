@@ -39,7 +39,8 @@ namespace SWT_20_ATM
                 System.Console.WriteLine($"Transponderdata {data}");
             }
 
-            NewPlanesEvent(TransponderDataList);
+            // Call Event
+            NewPlanesEvent?.Invoke(TransponderDataList);
             Console.WriteLine("");
 
         }
