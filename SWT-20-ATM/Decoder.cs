@@ -5,7 +5,13 @@ namespace SWT_20_ATM
 {
     public class Decoder : IDecoder
     {
-        private List<Plane> decoderList;
+        public List<Plane> decoderList;
+
+        public Decoder()
+        {
+            decoderList = new List<Plane>();
+        }
+
         public void Decode(List<string> newData)
         {
             decoderList.Clear();
