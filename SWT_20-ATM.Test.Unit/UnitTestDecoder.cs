@@ -15,6 +15,20 @@ namespace SWT_20_ATM.Test.Unit
         private Plane CorrectPlane;
         private DateTime CorrectDateTime;
 
+
+        //public override bool Equals(object obj)
+        //{
+        //    if (obj == null || this.GetType() != obj.GetType())
+        //    {
+        //        return false;
+        //    }
+
+        //    Plane otherObj = obj as Plane;
+
+        //    return (this.uut.decoderList[0].xCoordinate == otherObj.xCoordinate) &&
+        //           (this.uut.decoderList[0].yCoordinate == otherObj.yCoordinate);
+        //}
+
         [SetUp]
         public void init()
         {
@@ -28,8 +42,13 @@ namespace SWT_20_ATM.Test.Unit
         {
             var InputList = new List<string>{input};
             uut.Decode(InputList);
+            Assert.That(uut.OldPlaneList[0].xCoordinate, Is.EqualTo(CorrectPlane.xCoordinate));
+            Assert.That(uut.OldPlaneList[0].yCoordinate, Is.EqualTo(CorrectPlane.yCoordinate));
+            Assert.That(uut.OldPlaneList[0].lastUpdate, Is.EqualTo(CorrectPlane.lastUpdate));
             Assert.That(uut.OldPlaneList[0].Tag, Is.EqualTo(CorrectPlane.Tag));
-            //NUnit.Framework.Assert.That(ReturnList[0][0].Tag, Is.EqualTo(testList[0].Tag));
+            Assert.That(uut.OldPlaneList[0].altitude, Is.EqualTo(CorrectPlane.altitude));
+            Assert.That(uut.OldPlaneList[0].direction, Is.EqualTo(CorrectPlane.direction));
+            Assert.That(uut.OldPlaneList[0].speed, Is.EqualTo(CorrectPlane.speed));
         }
 
     }
