@@ -20,22 +20,23 @@ namespace SWT_20_ATM
         public double direction;
         public DateTime lastUpdate;
 
-        public bool Update(Plane newPlane)
+        public bool Update(Plane oldPlane)
         {
             // Do not update if tags doesn't match
-            if (this.Tag != newPlane.Tag) return false;
+            if (this.Tag != oldPlane.Tag) return false;
 
             // Can't update with a old plane record
-            if (this.lastUpdate > newPlane.lastUpdate) return false;
+            if (this.lastUpdate < oldPlane.lastUpdate) return false;
             
             // Calculate direction
-            direction = Calculator.GetDirection2D(xCoordinate, yCoordinate, newPlane.xCoordinate, newPlane.yCoordinate);
+            direction = Calculator.GetDirection2D(oldPlane.xCoordinate, oldPlane.yCoordinate, xCoordinate, yCoordinate);
 
             try
             {
                 // Calculate speed
-                speed = Calculator.GetSpeed(xCoordinate, yCoordinate, lastUpdate,
-                                 newPlane.xCoordinate, newPlane.yCoordinate, newPlane.lastUpdate);
+                speed = Calculator.GetSpeed(oldPlane.xCoordinate, oldPlane.yCoordinate, oldPlane.lastUpdate,
+                                            xCoordinate, yCoordinate, lastUpdate
+                                            );
             }
             catch (Exception e)
             {
@@ -43,7 +44,7 @@ namespace SWT_20_ATM
                 return false;
             }
 
-            lastUpdate = newPlane.lastUpdate;
+            lastUpdate = oldPlane.lastUpdate;
             return true;
         }
     }

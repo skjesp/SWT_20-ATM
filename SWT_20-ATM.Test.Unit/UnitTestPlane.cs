@@ -19,7 +19,7 @@ namespace SWT_20_ATM.Test.Unit
         public void init()
         {
             uutDateTime = new DateTime(2000,01,01,12,30,30);
-            validDateTime = new DateTime(2000,01,01,12,30,31);
+            validDateTime = new DateTime(2000,01,01,12,30,20);
             uut = new Plane("UUT.tag", 1000, 1000, 500, uutDateTime);
         }
         
@@ -40,21 +40,21 @@ namespace SWT_20_ATM.Test.Unit
         }
 
         [TestCase(29)]  //1 second behind UUT
-        public void Update_OlderTimestamp_ReturnFalse(int time)
+        public void Update_OlderTimestamp_ReturnTrue(int time)
         {
             DateTime Wrongtime = new DateTime(2000,01,01,12,30,time);
             Plane newPlane = new Plane("UUT.tag", 1000, 1000, 500, Wrongtime);
 
-            Assert.IsFalse(uut.Update(newPlane));
+            Assert.IsTrue(uut.Update(newPlane));
         }
 
         [TestCase(31)]  //1 second behind UUT
-        public void Update_NewerTimestamp_ReturnTrue(int time)
+        public void Update_NewerTimestamp_ReturnFalse(int time)
         {
             DateTime Wrongtime = new DateTime(2000, 01, 01, 12, 30, time);
             Plane newPlane = new Plane("UUT.tag", 1000, 1000, 500, Wrongtime);
 
-            Assert.IsTrue(uut.Update(newPlane));
+            Assert.IsFalse(uut.Update(newPlane));
         }
 
         /// <summary>

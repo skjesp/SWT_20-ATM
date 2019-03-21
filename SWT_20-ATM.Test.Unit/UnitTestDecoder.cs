@@ -28,7 +28,7 @@ namespace SWT_20_ATM.Test.Unit
         {
             var InputList = new List<string>{input};
             uut.Decode(InputList);
-            Assert.That(uut.decoderList[0].Tag, Is.EqualTo(CorrectPlane.Tag));
+            Assert.That(uut.OldPlaneList[0].Tag, Is.EqualTo(CorrectPlane.Tag));
             //NUnit.Framework.Assert.That(ReturnList[0][0].Tag, Is.EqualTo(testList[0].Tag));
         }
 
