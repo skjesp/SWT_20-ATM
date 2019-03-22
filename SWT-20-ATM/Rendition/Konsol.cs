@@ -24,9 +24,22 @@ namespace SWT_20_ATM
             }
         }
 
-        public void RenderViolations()
+        public void RenderViolations(List<Plane> offenderPlanes, string violation = "Seperation")
         {
-            throw new NotImplementedException();
+            if (offenderPlanes.Count == 1)
+            {
+                Console.Write("The Plane " + offenderPlanes[0].Tag);
+            }
+            else
+            {
+                Console.Write("The Planes " + offenderPlanes[0].Tag);
+                foreach (Plane iPlane in offenderPlanes)
+                {
+                    Console.Write(", " + iPlane.Tag);
+                }
+            }
+
+            Console.WriteLine(" Has violated the" + violation + " rule.");
         }
     }
 }

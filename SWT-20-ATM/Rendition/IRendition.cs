@@ -8,6 +8,6 @@ namespace SWT_20_ATM
     public interface IRendition
     {
         void RenderPlanes(List<Plane> planeList);
-        void RenderViolations(); //not implemented
+        void RenderViolations(List<Plane> offenderPlanes, string violation = "Seperation");
     }
 }
