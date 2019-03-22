@@ -37,5 +37,20 @@ namespace SWT_20_ATM.Test.Unit
             Assert.That(uut.OldPlaneList[0].speed, Is.EqualTo(CorrectPlane.speed));
         }
 
+        [TestCase("TEST123;10000;10000;10000;20000101123030500", "TEST123;10000;10500;10000;20000101123031500")] //Plane travelled 500 units along y-axis.
+        public void Receive2Inputs_UpdateSpeedAndDirectionForPlanes(string input1, string input2)
+        {
+            //First input
+            var InputList = new List<string> {input1};
+            uut.Decode(InputList);
+
+            //Second input
+            InputList.Clear();
+            InputList.Add(input2);
+            uut.Decode(InputList);
+
+            Assert.That(uut.OldPlaneList[0].speed,Is.EqualTo(500));
+        }
+
     }
 }
