@@ -70,22 +70,23 @@ namespace SWT_20_ATM.Test.Unit
             Assert.That(uut.OldPlaneList.Count, Is.EqualTo(2));
         }
 
+        [TestCase]
+        public void Receive2Inputs_Update_SpeedAndDirectionIsNaN()
+        {
+            //Create Plane with Invalid Speed
+            Plane InvalidSpeedPlane = new Plane("TEST123",10000,10000,10000,CorrectDateTime);
+            InvalidSpeedPlane.speed = Double.NaN;
 
+            //Create Plane with Invalid Direction
+            Plane InvalidDirectionPlane = new Plane("TEST321", 10000, 10000, 10000, CorrectDateTime);
+            InvalidDirectionPlane.direction = Double.NaN;
 
+            List<Plane> PlaneWithNaNSpeed = new List<Plane>{ InvalidSpeedPlane, InvalidDirectionPlane};
 
-        //public void Receive2Inputs_Update_SpeedIsNaN(string input1, string input2)
-        //{
-        //    //First input
-        //    var InputList = new List<string> { input1 };
-        //    uut.Decode(InputList);
-
-        //    //Second input
-        //    InputList.Clear();
-        //    InputList.Add(input2);
-        //    uut.Decode(InputList);
-
-        //    Assert.That(uut.OldPlaneList[0].speed, Is.EqualTo(500));
-        //}
+            //No planes were added to EmptyPlaneList because all planes that was to be added were invalid.
+            List<Plane> EmptyPlaneList = uut.GetCompletePlanes(PlaneWithNaNSpeed);
+            Assert.IsEmpty(EmptyPlaneList);
+        }
 
     }
 }
