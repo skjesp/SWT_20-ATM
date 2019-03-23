@@ -24,7 +24,7 @@ namespace SWT_20_ATM
             }
         }
 
-        public void RenderViolations(List<Plane> offenderPlanes, string violation = "Seperation")
+        public void RenderViolations(List<Plane> offenderPlanes, string violation = "Separation")
         {
             if (offenderPlanes.Count == 1)
             {
@@ -32,14 +32,24 @@ namespace SWT_20_ATM
             }
             else
             {
-                Console.Write("The Planes " + offenderPlanes[0].Tag);
+                //Console.Write("The Planes " + offenderPlanes[0].Tag);,
+                Console.Write("The Planes ");
                 foreach (Plane iPlane in offenderPlanes)
                 {
-                    Console.Write(", " + iPlane.Tag);
+                    if (offenderPlanes.Last() == iPlane)
+                    {
+                        Console.Write(iPlane.Tag);
+                    }
+                    else
+                    {
+                        Console.Write(iPlane.Tag + ", ");
+                    }
+                    
+                    
                 }
             }
 
-            Console.WriteLine(" Has violated the" + violation + " rule.");
+            Console.WriteLine(" has violated the " + violation + " rule.");
         }
     }
 }
