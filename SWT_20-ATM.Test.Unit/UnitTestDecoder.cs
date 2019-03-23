@@ -64,6 +64,9 @@ namespace SWT_20_ATM.Test.Unit
             InputList.Add(input2);
             uut.Decode(InputList);
             
+            //Planes are in same position.
+            uut.Decode(InputList);
+
             Assert.That(uut.OldPlaneList.Count, Is.EqualTo(2));
         }
 
