@@ -18,7 +18,7 @@ namespace SWT_20_ATM
             }
 
         }
-        public void AddToLog(PlaneSeparation SepToLog)
+        public void AddToLog(string SepToLog)
         {
             StringWriter sw = new StringWriter();
             sw.WriteLine(_filePath, SepToLog);
