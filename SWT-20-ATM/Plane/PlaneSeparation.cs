@@ -32,8 +32,8 @@ namespace SWT_20_ATM
                 {
                     if (Plane.Tag == comparePlane.Tag) continue;    // Do nothing if plane being compared is the same
 
-                    double horizontalDifference = Calculator.GetDistance(Plane.xCoordinate, Plane.yCoordinate, comparePlane.xCoordinate, comparePlane.yCoordinate);
-                    int verticalDifference = Math.Abs(Plane.altitude - comparePlane.altitude);
+                    double horizontalDifference = Calculator.GetDistance(Plane.XCoordinate, Plane.YCoordinate, comparePlane.XCoordinate, comparePlane.YCoordinate);
+                    int verticalDifference = Math.Abs(Plane.Altitude - comparePlane.Altitude);
 
                     if (horizontalDifference >= _minHorizontalDistance) continue;   // Do nothing if horizontal difference is large enough
                     if (verticalDifference   >= _minVerticalDistance)   continue;   // Do nothing if vertical   difference is large enough

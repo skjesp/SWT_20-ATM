@@ -25,13 +25,13 @@ namespace SWT_20_ATM.Test.Unit
         {
             var InputList = new List<string> { input };
             uut.Decode( InputList );
-            Assert.That( uut.OldPlaneList[0].xCoordinate, Is.EqualTo( CorrectPlane.xCoordinate ) );
-            Assert.That( uut.OldPlaneList[0].yCoordinate, Is.EqualTo( CorrectPlane.yCoordinate ) );
-            Assert.That( uut.OldPlaneList[0].lastUpdate, Is.EqualTo( CorrectPlane.lastUpdate ) );
+            Assert.That( uut.OldPlaneList[0].XCoordinate, Is.EqualTo( CorrectPlane.XCoordinate ) );
+            Assert.That( uut.OldPlaneList[0].YCoordinate, Is.EqualTo( CorrectPlane.YCoordinate ) );
+            Assert.That( uut.OldPlaneList[0].LastUpdate, Is.EqualTo( CorrectPlane.LastUpdate ) );
             Assert.That( uut.OldPlaneList[0].Tag, Is.EqualTo( CorrectPlane.Tag ) );
-            Assert.That( uut.OldPlaneList[0].altitude, Is.EqualTo( CorrectPlane.altitude ) );
-            Assert.That( uut.OldPlaneList[0].direction, Is.EqualTo( CorrectPlane.direction ) );
-            Assert.That( uut.OldPlaneList[0].speed, Is.EqualTo( CorrectPlane.speed ) );
+            Assert.That( uut.OldPlaneList[0].Altitude, Is.EqualTo( CorrectPlane.Altitude ) );
+            Assert.That( uut.OldPlaneList[0].Direction, Is.EqualTo( CorrectPlane.Direction ) );
+            Assert.That( uut.OldPlaneList[0].Speed, Is.EqualTo( CorrectPlane.Speed ) );
         }
 
         [TestCase( "TEST123;10000;10000;10000;20000101123030500", "TEST123;10000;10500;10000;20000101123031500" )] //Plane travelled 500 units along y-axis.
@@ -47,7 +47,7 @@ namespace SWT_20_ATM.Test.Unit
             InputList.Add( input2 );
             uut.Decode( InputList );
 
-            Assert.That( uut.OldPlaneList[0].speed, Is.EqualTo( 500 ) );
+            Assert.That( uut.OldPlaneList[0].Speed, Is.EqualTo( 500 ) );
         }
 
         [TestCase( "TEST123;10000;10000;10000;20000101123030500", "TEST321;10000;10500;10000;20000101123031500" )]
@@ -72,11 +72,11 @@ namespace SWT_20_ATM.Test.Unit
         {
             //Create Plane with Invalid Speed
             Plane InvalidSpeedPlane = new Plane( "TEST123", 10000, 10000, 10000, CorrectDateTime );
-            InvalidSpeedPlane.speed = Double.NaN;
+            InvalidSpeedPlane.Speed = Double.NaN;
 
             //Create Plane with Invalid Direction
             Plane InvalidDirectionPlane = new Plane( "TEST321", 10000, 10000, 10000, CorrectDateTime );
-            InvalidDirectionPlane.direction = Double.NaN;
+            InvalidDirectionPlane.Direction = Double.NaN;
 
             List<Plane> PlaneWithNaNSpeed = new List<Plane> { InvalidSpeedPlane, InvalidDirectionPlane };
 

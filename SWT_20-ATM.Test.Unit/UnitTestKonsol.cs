@@ -29,7 +29,7 @@ namespace SWT_20_ATM.Test.Unit
             //Plane 1 is still, Plane 2 is moving.
             Plane1 = new Plane( "Test1", 10000, 10000, 10000, DateTime.Now );
             Plane2 = new Plane( "Test2", 10000, 10000, 10000, DateTime.Now );
-            Plane2.speed = 500.0;
+            Plane2.Speed = 500.0;
             Planes = new List<Plane> { Plane1, Plane2 };
         }
 

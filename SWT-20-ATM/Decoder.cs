@@ -60,8 +60,8 @@ namespace SWT_20_ATM
 
             foreach (var plane in planeList)
             {
-                if (double.IsNaN(plane.speed)) continue;        // Do not add plane if speed is NaN
-                if (double.IsNaN(plane.direction)) continue;    // Do not add plane if direction is NaN
+                if (double.IsNaN(plane.Speed)) continue;        // Do not add plane if speed is NaN
+                if (double.IsNaN(plane.Direction)) continue;    // Do not add plane if direction is NaN
 
                 completePlaneList.Add(plane);                   // Add plane to list that will be returned
             }

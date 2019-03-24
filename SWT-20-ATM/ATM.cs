@@ -1,21 +1,25 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace SWT_20_ATM
 {
     public class ATM
     {
-        private Airspace ObservableAirspace;
-        private List<Plane> PlaneList;
-        private List<List<Plane>> ConditionViolation_Separation;
-        
-        
-        // Rules
-        private PlaneSeparation PlaneSeparator;
+        private IAirspace _observableAirspace;
 
-        public ATM( Airspace observableAirspace, int minVerticalDif, int minHorizontalDif )
+        private List<Plane> _planeList;
+        public List<Plane> PlaneList => _planeList;
+
+        private List<List<Plane>> ConditionViolation_Separation;
+        public ILogger Logger { get; set; }
+
+        // Rules
+        private PlaneSeparation _planeSeparator;
+
+        public ATM( IAirspace observableAirspace, int minVerticalDif, int minHorizontalDif )
         {
-            ObservableAirspace = observableAirspace;
-            PlaneSeparator = new PlaneSeparation( minHorizontalDif, minVerticalDif );
+            _observableAirspace = observableAirspace;
+            _planeSeparator = new PlaneSeparation( minHorizontalDif, minVerticalDif );
 
             ConditionViolation_Separation = new List<List<Plane>>();
         }
@@ -29,7 +33,7 @@ namespace SWT_20_ATM
             foreach ( var plane in newPlaneList )
             {
                 // Check if plane is within airspace
-                bool planeInAirspace = ObservableAirspace.IsWithinArea( plane.xCoordinate, plane.yCoordinate, plane.altitude );
+                bool planeInAirspace = _observableAirspace.IsWithinArea( plane.XCoordinate, plane.YCoordinate, plane.Altitude );
 
                 // Add plane to list if it's within the airspace
                 if ( planeInAirspace )
@@ -45,7 +49,7 @@ namespace SWT_20_ATM
         private void UpdateViolatingPlanes( List<Plane> updatedPlaneList )
         {
             // Check for violations
-            List<List<Plane>> newViolatingPlaneList = PlaneSeparator.CheckPlanes( updatedPlaneList );
+            List<List<Plane>> newViolatingPlaneList = _planeSeparator.CheckPlanes( updatedPlaneList );
 
 
             foreach ( var newPlanePair in newViolatingPlaneList )
@@ -55,7 +59,12 @@ namespace SWT_20_ATM
                 {
                     continue;
                 }
-                // Todo: Write to log
+
+                // Create log message
+                string msgToLog = string.Format( "{0:YYY:HH:mm:ss}: {1} and {2} Violates Separation condition!", DateTime.Now, newPlanePair[0].Tag, newPlanePair[1].Tag );
+
+                // Write log message to log
+                Logger?.AddToLog( msgToLog );
             }
 
             foreach ( var oldPlanePair in ConditionViolation_Separation )
@@ -65,7 +74,11 @@ namespace SWT_20_ATM
                 {
                     continue;
                 }
-                // Todo: Write to log
+                // Create log message
+                string msgToLog = string.Format( "{0:YYY:HH:mm:ss}: {1} and {2} Violates Separation condition!", DateTime.Now, oldPlanePair[0].Tag, oldPlanePair[1].Tag );
+
+                // Write log message to log
+                Logger?.AddToLog( msgToLog );
             }
 
             // Update ConditionViolation_Separation to contain new errors 

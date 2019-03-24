@@ -1,4 +1,5 @@
-﻿using NUnit.Framework;
+﻿using NSubstitute;
+using NUnit.Framework;
 using System;
 using Assert = Microsoft.VisualStudio.TestTools.UnitTesting.Assert;
 
@@ -16,7 +17,7 @@ namespace SWT_20_ATM.Test.Unit
         {
             uutDateTime = new DateTime( 2000, 01, 01, 12, 30, 30 );
             validDateTime = new DateTime( 2000, 01, 01, 12, 30, 20 );
-            uut = new Plane( "UUT.tag", 1000, 1000, 500, uutDateTime );
+            uut = new Plane( "UUT.Tag", 1000, 1000, 500, uutDateTime );
         }
 
         [TestCase( "wrongTag" )]
@@ -27,7 +28,7 @@ namespace SWT_20_ATM.Test.Unit
             Assert.IsFalse( uut.Update( newPlane ) );
         }
 
-        [TestCase( "UUT.tag" )]
+        [TestCase( "UUT.Tag" )]
         public void Update_SameTag_ReturnTrue( string RightTag )
         {
             Plane newPlane = new Plane( RightTag, 2000, 2000, 500, validDateTime );
@@ -39,7 +40,7 @@ namespace SWT_20_ATM.Test.Unit
         public void Update_OlderTimestamp_ReturnTrue( int time )
         {
             DateTime Wrongtime = new DateTime( 2000, 01, 01, 12, 30, time );
-            Plane newPlane = new Plane( "UUT.tag", 1000, 1000, 500, Wrongtime );
+            Plane newPlane = new Plane( "UUT.Tag", 1000, 1000, 500, Wrongtime );
 
             Assert.IsTrue( uut.Update( newPlane ) );
         }
@@ -48,7 +49,7 @@ namespace SWT_20_ATM.Test.Unit
         public void Update_NewerTimestamp_ReturnFalse( int time )
         {
             DateTime Wrongtime = new DateTime( 2000, 01, 01, 12, 30, time );
-            Plane newPlane = new Plane( "UUT.tag", 1000, 1000, 500, Wrongtime );
+            Plane newPlane = new Plane( "UUT.Tag", 1000, 1000, 500, Wrongtime );
 
             Assert.IsFalse( uut.Update( newPlane ) );
         }
@@ -59,10 +60,12 @@ namespace SWT_20_ATM.Test.Unit
         [TestCase]
         public void Update_InvalidSpeed_throwException()
         {
-            Plane newPlane = uut;
+            //Plane newPlane = uut;
+            IPlane newPlane = Substitute.For<IPlane>();
+            newPlane = uut;
 
-            //newplane has flewn 1 meter  on the xCoordinate.
-            newPlane.xCoordinate = newPlane.xCoordinate + 1;
+            // newplane has flown 1 meter  on the xCoordinate.
+            newPlane.XCoordinate.Returns( uut.XCoordinate + 1 );
 
             Assert.IsFalse( uut.Update( newPlane ) );
         }
