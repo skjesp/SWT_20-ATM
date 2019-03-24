@@ -58,6 +58,7 @@
     <Compile Include="UnitTestAirspace.cs" />
     <Compile Include="UnitTestCuboid.cs" />
     <Compile Include="UnitTestDecoder.cs" />
+    <Compile Include="UnitTestKonsol.cs" />
     <Compile Include="UnitTestPlane.cs" />
     <Compile Include="UnitTestPlaneSeparation.cs" />
   </ItemGroup>
