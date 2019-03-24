@@ -12,11 +12,23 @@ namespace SWT_20_ATM.Test.Unit
         [SetUp]
         public void init()
         {
-            var uut = new FileLogger();
         }
 
-        [TestCase("C:\Users\Mads\Documents")]
-        void ReceiveString_Constructor(string x)
+        [TestCase(@"C:\Users\")]
+        void ReceivePath_Constructor(string x)
+        {
+            uut = new FileLogger(x);
+            Assert.That(uut._filePath, IsEqualTo(x));
+        }
+
+        // Maybe not necessary.
+        /*void NoPathSpec_Constructor()
+        {
+            uut = new FileLogger();
+            Assert.That(uut._filePath, IsEqualTo("../SepLog.txt"));
+        }*/
+
+        void AddToLog_Test()
         {
 
         }

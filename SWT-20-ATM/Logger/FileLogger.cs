@@ -4,20 +4,12 @@ namespace SWT_20_ATM
 {
     public class FileLogger : ILogger
     {
-        public FileLogger(string filePath)
+        public FileLogger(string filePath = "../SepLog.txt")
         {
-            if (filePath == null)
-            {
-                _filePath = "../SepLog.txt";
-                File.Open(_filePath, FileMode.OpenOrCreate, FileAccess.ReadWrite);
-            }
-            else
-            {
-                _filePath = filePath;
-                File.Open(_filePath, FileMode.OpenOrCreate, FileAccess.ReadWrite);
-            }
-
+            _filePath = filePath;
+            File.Open(_filePath, FileMode.OpenOrCreate, FileAccess.ReadWrite);
         }
+
         public void AddToLog(string SepToLog)
         {
             StringWriter sw = new StringWriter();
