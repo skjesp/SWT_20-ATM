@@ -1,9 +1,6 @@
-﻿using System;
+﻿using NUnit.Framework;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using NUnit.Framework;
 //using Assert = Microsoft.VisualStudio.TestTools.UnitTesting.Assert;
 
 namespace SWT_20_ATM.Test.Unit
@@ -19,73 +16,73 @@ namespace SWT_20_ATM.Test.Unit
         public void init()
         {
             uut = new Decoder();
-            CorrectDateTime = new DateTime(2000,01,01,12,30,30,500);
-            CorrectPlane = new Plane("TEST123",10000,10000,10000, CorrectDateTime);
+            CorrectDateTime = new DateTime( 2000, 01, 01, 12, 30, 30, 500 );
+            CorrectPlane = new Plane( "TEST123", 10000, 10000, 10000, CorrectDateTime );
         }
 
-        [TestCase("TEST123;10000;10000;10000;20000101123030500")]
-        public void ReceiveValidInput_SetDecoderList(string input)
+        [TestCase( "TEST123;10000;10000;10000;20000101123030500" )]
+        public void ReceiveValidInput_SetDecoderList( string input )
         {
-            var InputList = new List<string>{input};
-            uut.Decode(InputList);
-            Assert.That(uut.OldPlaneList[0].xCoordinate, Is.EqualTo(CorrectPlane.xCoordinate));
-            Assert.That(uut.OldPlaneList[0].yCoordinate, Is.EqualTo(CorrectPlane.yCoordinate));
-            Assert.That(uut.OldPlaneList[0].lastUpdate, Is.EqualTo(CorrectPlane.lastUpdate));
-            Assert.That(uut.OldPlaneList[0].Tag, Is.EqualTo(CorrectPlane.Tag));
-            Assert.That(uut.OldPlaneList[0].altitude, Is.EqualTo(CorrectPlane.altitude));
-            Assert.That(uut.OldPlaneList[0].direction, Is.EqualTo(CorrectPlane.direction));
-            Assert.That(uut.OldPlaneList[0].speed, Is.EqualTo(CorrectPlane.speed));
+            var InputList = new List<string> { input };
+            uut.Decode( InputList );
+            Assert.That( uut.OldPlaneList[0].xCoordinate, Is.EqualTo( CorrectPlane.xCoordinate ) );
+            Assert.That( uut.OldPlaneList[0].yCoordinate, Is.EqualTo( CorrectPlane.yCoordinate ) );
+            Assert.That( uut.OldPlaneList[0].lastUpdate, Is.EqualTo( CorrectPlane.lastUpdate ) );
+            Assert.That( uut.OldPlaneList[0].Tag, Is.EqualTo( CorrectPlane.Tag ) );
+            Assert.That( uut.OldPlaneList[0].altitude, Is.EqualTo( CorrectPlane.altitude ) );
+            Assert.That( uut.OldPlaneList[0].direction, Is.EqualTo( CorrectPlane.direction ) );
+            Assert.That( uut.OldPlaneList[0].speed, Is.EqualTo( CorrectPlane.speed ) );
         }
 
-        [TestCase("TEST123;10000;10000;10000;20000101123030500", "TEST123;10000;10500;10000;20000101123031500")] //Plane travelled 500 units along y-axis.
-        
-        public void Receive2Inputs_UpdateSpeedAndDirectionForPlanes(string input1, string input2)
-        {
-            //First input
-            var InputList = new List<string> {input1};
-            uut.Decode(InputList);
+        [TestCase( "TEST123;10000;10000;10000;20000101123030500", "TEST123;10000;10500;10000;20000101123031500" )] //Plane travelled 500 units along y-axis.
 
-            //Second input
-            InputList.Clear();
-            InputList.Add(input2);
-            uut.Decode(InputList);
-
-            Assert.That(uut.OldPlaneList[0].speed,Is.EqualTo(500));
-        }
-
-        [TestCase("TEST123;10000;10000;10000;20000101123030500", "TEST321;10000;10500;10000;20000101123031500")]
-        public void Receive2Inputs_HaveMultiplePlanesInOldPlaneList(string input1, string input2)
+        public void Receive2Inputs_UpdateSpeedAndDirectionForPlanes( string input1, string input2 )
         {
             //First input
             var InputList = new List<string> { input1 };
-            uut.Decode(InputList);
+            uut.Decode( InputList );
 
             //Second input
-            InputList.Add(input2);
-            uut.Decode(InputList);
-            
-            //Planes are in same position.
-            uut.Decode(InputList);
+            InputList.Clear();
+            InputList.Add( input2 );
+            uut.Decode( InputList );
 
-            Assert.That(uut.OldPlaneList.Count, Is.EqualTo(2));
+            Assert.That( uut.OldPlaneList[0].speed, Is.EqualTo( 500 ) );
+        }
+
+        [TestCase( "TEST123;10000;10000;10000;20000101123030500", "TEST321;10000;10500;10000;20000101123031500" )]
+        public void Receive2Inputs_HaveMultiplePlanesInOldPlaneList( string input1, string input2 )
+        {
+            //First input
+            var InputList = new List<string> { input1 };
+            uut.Decode( InputList );
+
+            //Second input
+            InputList.Add( input2 );
+            uut.Decode( InputList );
+
+            //Planes are in same position.
+            uut.Decode( InputList );
+
+            Assert.That( uut.OldPlaneList.Count, Is.EqualTo( 2 ) );
         }
 
         [TestCase]
         public void Receive2Inputs_Update_SpeedAndDirectionIsNaN()
         {
             //Create Plane with Invalid Speed
-            Plane InvalidSpeedPlane = new Plane("TEST123",10000,10000,10000,CorrectDateTime);
+            Plane InvalidSpeedPlane = new Plane( "TEST123", 10000, 10000, 10000, CorrectDateTime );
             InvalidSpeedPlane.speed = Double.NaN;
 
             //Create Plane with Invalid Direction
-            Plane InvalidDirectionPlane = new Plane("TEST321", 10000, 10000, 10000, CorrectDateTime);
+            Plane InvalidDirectionPlane = new Plane( "TEST321", 10000, 10000, 10000, CorrectDateTime );
             InvalidDirectionPlane.direction = Double.NaN;
 
-            List<Plane> PlaneWithNaNSpeed = new List<Plane>{ InvalidSpeedPlane, InvalidDirectionPlane};
+            List<Plane> PlaneWithNaNSpeed = new List<Plane> { InvalidSpeedPlane, InvalidDirectionPlane };
 
             //No planes were added to EmptyPlaneList because all planes that was to be added were invalid.
-            List<Plane> EmptyPlaneList = uut.GetCompletePlanes(PlaneWithNaNSpeed);
-            Assert.IsEmpty(EmptyPlaneList);
+            List<Plane> EmptyPlaneList = uut.GetCompletePlanes( PlaneWithNaNSpeed );
+            Assert.IsEmpty( EmptyPlaneList );
         }
 
     }
