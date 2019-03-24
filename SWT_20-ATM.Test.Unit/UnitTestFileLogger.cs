@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.IO;
 using NUnit.Framework;
 namespace SWT_20_ATM.Test.Unit
 {
@@ -12,6 +13,7 @@ namespace SWT_20_ATM.Test.Unit
         [SetUp]
         public void init()
         {
+            uut = new FileLogger();
         }
 
         [TestCase(@"C:\Users\")]
@@ -28,9 +30,13 @@ namespace SWT_20_ATM.Test.Unit
             Assert.That(uut._filePath, IsEqualTo("../SepLog.txt"));
         }*/
 
-        void AddToLog_Test()
+        [TestCase("Test String 1")]
+        [TestCase("Test String 2")]
+        void AddToLog_Test(string x)
         {
-
+            uut.AddToLog(x);
+            string text = File.ReadAllText("../SepLog.txt");
+            Assert.That(text, IsEqualTo(x));
         }
     }
 }

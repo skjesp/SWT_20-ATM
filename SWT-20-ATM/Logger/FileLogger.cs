@@ -12,9 +12,13 @@ namespace SWT_20_ATM
 
         public void AddToLog(string SepToLog)
         {
+            DateTime now = DateTime.Now;
+
             StringWriter sw = new StringWriter();
             sw.WriteLine(_filePath, SepToLog);
             sw.Flush();
+
+            Console.WriteLine("Logged seperation event to file: {0}", now);
         }
 
         string _filePath;
