@@ -60,13 +60,21 @@ namespace SWT_20_ATM.Test.Unit
         [TestCase]
         public void Update_InvalidSpeed_throwException()
         {
-            //Plane newPlane = uut;
+            // Make one plane with exact same properties as uut
             IPlane newPlane = Substitute.For<IPlane>();
-            newPlane = uut;
+            newPlane = Substitute.For<IPlane>();
+            newPlane.Tag.Returns( "UUT.Tag" );
+            newPlane.XCoordinate.Returns( 1000 );
+            newPlane.YCoordinate.Returns( 1000 );
+            newPlane.Altitude.Returns( 500 );
+            newPlane.LastUpdate.Returns( uutDateTime );
+
 
             // newplane has flown 1 meter  on the xCoordinate.
             newPlane.XCoordinate.Returns( uut.XCoordinate + 1 );
 
+            // This should fail since newPlane has moved but LastUpdate is the same
+            // This means that newPlane moved in no time, which is impossible
             Assert.IsFalse( uut.Update( newPlane ) );
         }
     }
