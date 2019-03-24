@@ -2,49 +2,73 @@
 
 namespace SWT_20_ATM
 {
-    public class Plane
+    public class Plane : IPlane
     {
-        public Plane(string _tag, int _xCor, int _yCor, int _altitude, DateTime _time)
+        public Plane( string tag, int xCor, int yCor, int altitude, DateTime time )
         {
-            Tag = _tag;
-            xCoordinate = _xCor;
-            yCoordinate = _yCor;
-            altitude = _altitude;
-            lastUpdate = _time;
+            _tag = tag;
+            _xCoordinate = xCor;
+            _yCoordinate = yCor;
+            _altitude = altitude;
+            _lastUpdate = time;
         }
-        public string Tag;
-        public int xCoordinate;
-        public int yCoordinate;
-        public int altitude;
-        public double speed;
-        public double direction;
-        public DateTime lastUpdate;
 
-        public bool Update(Plane oldPlane)
+        private string _tag;
+        public string Tag => _tag;
+
+        private int _xCoordinate;
+        public int XCoordinate => _xCoordinate;
+
+        private int _yCoordinate;
+        public int YCoordinate => _yCoordinate;
+
+        private int _altitude;
+        public int Altitude => _altitude;
+
+        private double _speed;
+        public double Speed => _speed;
+
+        private DateTime _lastUpdate;
+        public DateTime LastUpdate => _lastUpdate;
+
+
+        private double _direction;
+        public double Direction => _direction;
+
+
+
+
+        public bool Update( IPlane oldPlane )
         {
             // Do not update if tags doesn't match
-            if (this.Tag != oldPlane.Tag) return false;
+            if ( this.Tag != oldPlane.Tag )
+            {
+                return false;
+            }
 
             // Can't update with a old plane record
-            if (this.lastUpdate < oldPlane.lastUpdate) return false;
-            
+            if ( this.LastUpdate < oldPlane.LastUpdate )
+            {
+                return false;
+            }
+
             // Calculate direction
-            direction = Calculator.GetDirection2D(oldPlane.xCoordinate, oldPlane.yCoordinate, xCoordinate, yCoordinate);
+            _direction = Calculator.GetDirection2D( oldPlane.XCoordinate, oldPlane.YCoordinate, XCoordinate, YCoordinate );
 
             try
             {
                 // Calculate speed
-                speed = Calculator.GetSpeed(oldPlane.xCoordinate, oldPlane.yCoordinate, oldPlane.lastUpdate,
-                                            xCoordinate, yCoordinate, lastUpdate
+                _speed = Calculator.GetSpeed( oldPlane.XCoordinate, oldPlane.YCoordinate, oldPlane.LastUpdate,
+                                            XCoordinate, YCoordinate, LastUpdate
                                             );
             }
-            catch (Exception e)
+            catch ( Exception e )
             {
-                Console.WriteLine(e);
+                Console.WriteLine( e );
                 return false;
             }
 
-            lastUpdate = oldPlane.lastUpdate;
+            _lastUpdate = oldPlane.LastUpdate;
             return true;
         }
     }

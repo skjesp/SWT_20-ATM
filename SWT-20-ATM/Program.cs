@@ -22,7 +22,7 @@ namespace SWT_20_ATM
             system.NewPlanesEvent += myDecoder.Decode;
 
             // Create used airspace
-            Airspace airspace = new Airspace();
+            IAirspace airspace = new Airspace();
 
             // Add area to airspace
             airspace.AddShape( new Cuboid( 0, 0, 500, 80000, 80000, 20000 ) );

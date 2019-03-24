@@ -1,55 +1,54 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace SWT_20_ATM
 {
     public class Konsol : IRendition
     {
-        public void RenderPlanes(List<Plane> planeList)
+        public void RenderPlanes( List<IPlane> planeList )
         {
-            foreach (Plane iPlane in planeList)
+            foreach ( IPlane iPlane in planeList )
             {
-                if (iPlane.speed != 0)
+                if ( iPlane.Speed != 0 )
                 {
-                    Console.WriteLine(iPlane.Tag + ": Coordinates x-y: " + iPlane.xCoordinate + "-" + iPlane.yCoordinate
-                                      + " Altitude: " + iPlane.altitude + " Velocity: " + iPlane.speed + " Compass course: " + iPlane.direction);
+                    Console.WriteLine( iPlane.Tag + ": Coordinates x-y: " + iPlane.XCoordinate + "-" + iPlane.YCoordinate
+                                      + " Altitude: " + iPlane.Altitude + " Velocity: " + iPlane.Speed + " Compass course: " + iPlane.Direction );
                 }
                 else
                 {
-                    Console.WriteLine(iPlane.Tag + ": Coordinates x-y: " + iPlane.xCoordinate + "-" + iPlane.yCoordinate
-                                      + " Altitude: " + iPlane.altitude);
+                    Console.WriteLine( iPlane.Tag + ": Coordinates x-y: " + iPlane.XCoordinate + "-" + iPlane.YCoordinate
+                                      + " Altitude: " + iPlane.Altitude );
                 }
             }
         }
 
-        public void RenderViolations(List<Plane> offenderPlanes, string violation = "Separation")
+        public void RenderViolations( List<IPlane> offenderPlanes, string violation = "Separation" )
         {
-            if (offenderPlanes.Count == 1)
+            if ( offenderPlanes.Count == 1 )
             {
-                Console.Write("The Plane " + offenderPlanes[0].Tag);
+                Console.Write( "The Plane " + offenderPlanes[0].Tag );
             }
             else
             {
                 //Console.Write("The Planes " + offenderPlanes[0].Tag);,
-                Console.Write("The Planes ");
-                foreach (Plane iPlane in offenderPlanes)
+                Console.Write( "The Planes " );
+                foreach ( IPlane Plane in offenderPlanes )
                 {
-                    if (offenderPlanes.Last() == iPlane)
+                    if ( offenderPlanes.Last() == Plane )
                     {
-                        Console.Write(iPlane.Tag);
+                        Console.Write( Plane.Tag );
                     }
                     else
                     {
-                        Console.Write(iPlane.Tag + ", ");
+                        Console.Write( Plane.Tag + ", " );
                     }
-                    
-                    
+
+
                 }
             }
 
-            Console.WriteLine(" has violated the " + violation + " rule.");
+            Console.WriteLine( " has violated the " + violation + " rule." );
         }
     }
 }

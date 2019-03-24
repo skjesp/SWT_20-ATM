@@ -1,10 +1,11 @@
-﻿using System;
-
-namespace SWT_20_ATM
+﻿namespace SWT_20_ATM
 {
     public interface ILogger
     {
-        void AddToLog(string SepToLog);
-        
+        /// <summary>
+        /// Writes a message to a logger
+        /// </summary>
+        /// <param name="message"></param>
+        void AddToLog( string message );
     }
 }
