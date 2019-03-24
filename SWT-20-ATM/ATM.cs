@@ -10,7 +10,7 @@ namespace SWT_20_ATM
         private List<Plane> _planeList;
         public List<Plane> PlaneList => _planeList;
 
-        private List<List<Plane>> ConditionViolation_Separation;
+        private List<List<IPlane>> ConditionViolation_Separation;
         public ILogger Logger { get; set; }
 
         // Rules
@@ -21,13 +21,13 @@ namespace SWT_20_ATM
             _observableAirspace = observableAirspace;
             _planeSeparator = new PlaneSeparation( minHorizontalDif, minVerticalDif );
 
-            ConditionViolation_Separation = new List<List<Plane>>();
+            ConditionViolation_Separation = new List<List<IPlane>>();
         }
 
-        public void UpdatePlaneList( List<Plane> newPlaneList )
+        public void UpdatePlaneList( List<IPlane> newPlaneList )
         {
 
-            List<Plane> updatedPlaneList = new List<Plane>();
+            List<IPlane> updatedPlaneList = new List<IPlane>();
 
             // Only select planes present in ObservableAirspace
             foreach ( var plane in newPlaneList )
@@ -46,10 +46,10 @@ namespace SWT_20_ATM
             UpdateViolatingPlanes( updatedPlaneList );  // Update violating planes
         }
 
-        private void UpdateViolatingPlanes( List<Plane> updatedPlaneList )
+        private void UpdateViolatingPlanes( List<IPlane> updatedPlaneList )
         {
             // Check for violations
-            List<List<Plane>> newViolatingPlaneList = _planeSeparator.CheckPlanes( updatedPlaneList );
+            List<List<IPlane>> newViolatingPlaneList = _planeSeparator.CheckPlanes( updatedPlaneList );
 
 
             foreach ( var newPlanePair in newViolatingPlaneList )

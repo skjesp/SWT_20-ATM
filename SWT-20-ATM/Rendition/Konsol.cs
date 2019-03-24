@@ -6,9 +6,9 @@ namespace SWT_20_ATM
 {
     public class Konsol : IRendition
     {
-        public void RenderPlanes( List<Plane> planeList )
+        public void RenderPlanes( List<IPlane> planeList )
         {
-            foreach ( Plane iPlane in planeList )
+            foreach ( IPlane iPlane in planeList )
             {
                 if ( iPlane.Speed != 0 )
                 {
@@ -23,7 +23,7 @@ namespace SWT_20_ATM
             }
         }
 
-        public void RenderViolations( List<Plane> offenderPlanes, string violation = "Separation" )
+        public void RenderViolations( List<IPlane> offenderPlanes, string violation = "Separation" )
         {
             if ( offenderPlanes.Count == 1 )
             {
@@ -33,15 +33,15 @@ namespace SWT_20_ATM
             {
                 //Console.Write("The Planes " + offenderPlanes[0].Tag);,
                 Console.Write( "The Planes " );
-                foreach ( Plane iPlane in offenderPlanes )
+                foreach ( IPlane Plane in offenderPlanes )
                 {
-                    if ( offenderPlanes.Last() == iPlane )
+                    if ( offenderPlanes.Last() == Plane )
                     {
-                        Console.Write( iPlane.Tag );
+                        Console.Write( Plane.Tag );
                     }
                     else
                     {
-                        Console.Write( iPlane.Tag + ", " );
+                        Console.Write( Plane.Tag + ", " );
                     }
 
 
