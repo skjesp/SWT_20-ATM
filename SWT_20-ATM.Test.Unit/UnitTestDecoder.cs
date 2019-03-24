@@ -1,6 +1,8 @@
-﻿using NUnit.Framework;
+﻿using NSubstitute;
+using NUnit.Framework;
 using System;
 using System.Collections.Generic;
+
 //using Assert = Microsoft.VisualStudio.TestTools.UnitTesting.Assert;
 
 namespace SWT_20_ATM.Test.Unit
@@ -70,19 +72,20 @@ namespace SWT_20_ATM.Test.Unit
         [TestCase]
         public void Receive2Inputs_Update_SpeedAndDirectionIsNaN()
         {
-            //Create Plane with Invalid Speed
-            Plane InvalidSpeedPlane = new Plane( "TEST123", 10000, 10000, 10000, CorrectDateTime );
-            InvalidSpeedPlane.Speed = Double.NaN;
+            //Create Plane with Invalid 
+            IPlane invalidSpeedPlane = Substitute.For<IPlane>();
+            invalidSpeedPlane = new Plane( "TEST123", 10000, 10000, 10000, CorrectDateTime );
+            invalidSpeedPlane.Speed.Returns( Double.NaN );
 
             //Create Plane with Invalid Direction
-            Plane InvalidDirectionPlane = new Plane( "TEST321", 10000, 10000, 10000, CorrectDateTime );
-            InvalidDirectionPlane.Direction = Double.NaN;
+            IPlane invalidDirectionPlane = new Plane( "TEST321", 10000, 10000, 10000, CorrectDateTime );
+            invalidDirectionPlane.Direction.Returns( Double.NaN );
 
-            List<Plane> PlaneWithNaNSpeed = new List<Plane> { InvalidSpeedPlane, InvalidDirectionPlane };
+            List<IPlane> planeWithNaNSpeed = new List<IPlane> { invalidSpeedPlane, invalidDirectionPlane };
 
             //No planes were added to EmptyPlaneList because all planes that was to be added were invalid.
-            List<Plane> EmptyPlaneList = uut.GetCompletePlanes( PlaneWithNaNSpeed );
-            Assert.IsEmpty( EmptyPlaneList );
+            List<IPlane> emptyPlaneList = uut.GetCompletePlanes( planeWithNaNSpeed );
+            Assert.IsEmpty( emptyPlaneList );
         }
 
     }
