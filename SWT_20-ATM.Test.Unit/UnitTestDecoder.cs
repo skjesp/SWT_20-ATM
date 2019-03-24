@@ -11,7 +11,7 @@ namespace SWT_20_ATM.Test.Unit
     class UnitTestDecoder
     {
         private Decoder uut;
-        private Plane CorrectPlane;
+        private IPlane CorrectPlane;
         private DateTime CorrectDateTime;
 
         [SetUp]
@@ -19,14 +19,22 @@ namespace SWT_20_ATM.Test.Unit
         {
             uut = new Decoder();
             CorrectDateTime = new DateTime( 2000, 01, 01, 12, 30, 30, 500 );
-            CorrectPlane = new Plane( "TEST123", 10000, 10000, 10000, CorrectDateTime );
+
+            //Create fake Plane with Invalid Direction
+            CorrectPlane = Substitute.For<IPlane>();
+            CorrectPlane.Tag.Returns( "TEST123" );
+            CorrectPlane.XCoordinate.Returns( 10000 );
+            CorrectPlane.YCoordinate.Returns( 10000 );
+            CorrectPlane.Altitude.Returns( 10000 );
+            CorrectPlane.LastUpdate.Returns( CorrectDateTime );
         }
 
         [TestCase( "TEST123;10000;10000;10000;20000101123030500" )]
         public void ReceiveValidInput_SetDecoderList( string input )
         {
-            var InputList = new List<string> { input };
-            uut.Decode( InputList );
+            var inputList = new List<string> { input };
+            uut.Decode( inputList );
+
             Assert.That( uut.OldPlaneList[0].XCoordinate, Is.EqualTo( CorrectPlane.XCoordinate ) );
             Assert.That( uut.OldPlaneList[0].YCoordinate, Is.EqualTo( CorrectPlane.YCoordinate ) );
             Assert.That( uut.OldPlaneList[0].LastUpdate, Is.EqualTo( CorrectPlane.LastUpdate ) );
@@ -56,15 +64,15 @@ namespace SWT_20_ATM.Test.Unit
         public void Receive2Inputs_HaveMultiplePlanesInOldPlaneList( string input1, string input2 )
         {
             //First input
-            var InputList = new List<string> { input1 };
-            uut.Decode( InputList );
+            var inputList = new List<string> { input1 };
+            uut.Decode( inputList );
 
             //Second input
-            InputList.Add( input2 );
-            uut.Decode( InputList );
+            inputList.Add( input2 );
+            uut.Decode( inputList );
 
             //Planes are in same position.
-            uut.Decode( InputList );
+            uut.Decode( inputList );
 
             Assert.That( uut.OldPlaneList.Count, Is.EqualTo( 2 ) );
         }
@@ -72,14 +80,24 @@ namespace SWT_20_ATM.Test.Unit
         [TestCase]
         public void Receive2Inputs_Update_SpeedAndDirectionIsNaN()
         {
-            //Create Plane with Invalid 
+            //Create fake Plane with Invalid 
             IPlane invalidSpeedPlane = Substitute.For<IPlane>();
-            invalidSpeedPlane = new Plane( "TEST123", 10000, 10000, 10000, CorrectDateTime );
+            invalidSpeedPlane.Tag.Returns( "TEST123" );
+            invalidSpeedPlane.XCoordinate.Returns( 10000 );
+            invalidSpeedPlane.YCoordinate.Returns( 10000 );
+            invalidSpeedPlane.LastUpdate.Returns( CorrectDateTime );
+
             invalidSpeedPlane.Speed.Returns( Double.NaN );
 
-            //Create Plane with Invalid Direction
-            IPlane invalidDirectionPlane = new Plane( "TEST321", 10000, 10000, 10000, CorrectDateTime );
-            invalidDirectionPlane.Direction.Returns( Double.NaN );
+            //Create fake Plane with Invalid Direction
+            IPlane invalidDirectionPlane = Substitute.For<IPlane>();
+            invalidDirectionPlane.Tag.Returns( "TEST321" );
+            invalidDirectionPlane.XCoordinate.Returns( 10000 );
+            invalidDirectionPlane.YCoordinate.Returns( 10000 );
+            invalidDirectionPlane.LastUpdate.Returns( CorrectDateTime );
+
+            invalidDirectionPlane.Speed.Returns( Double.NaN );
+
 
             List<IPlane> planeWithNaNSpeed = new List<IPlane> { invalidSpeedPlane, invalidDirectionPlane };
 
