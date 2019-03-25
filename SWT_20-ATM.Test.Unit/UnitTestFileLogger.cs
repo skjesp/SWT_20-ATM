@@ -8,25 +8,25 @@ namespace SWT_20_ATM.Test.Unit
         private FileLogger uut;
 
         [SetUp]
-        public void init()
+        public void Init()
         {
             uut = new FileLogger();
         }
 
-        [TestCase( @"C:\Users\" )]
+        [TestCase( @"C:\Users\SepLog.txt" )]
         void ReceivePath_Constructor( string x )
         {
             uut = new FileLogger( x );
 
-            // Todo: Mextline needs a fix
-            //Assert.That( uut._filePath, IsEqualTo( x ) );
+            // Mextline needs a fix
+            Assert.That( uut.FilePath, Is.EqualTo( x ) );
         }
 
         // Maybe not necessary.
         /*void NoPathSpec_Constructor()
         {
             uut = new FileLogger();
-            Assert.That(uut._filePath, IsEqualTo("../SepLog.txt"));
+            Assert.That(uut.FilePath, IsEqualTo("../SepLog.txt"));
         }*/
 
         [TestCase( "Test String 1" )]
@@ -36,7 +36,7 @@ namespace SWT_20_ATM.Test.Unit
             uut.AddToLog( x );
             string text = File.ReadAllText( "../SepLog.txt" );
             // Todo: Mextline needs a fix
-            //Assert.That( text, IsEqualTo( x ) );
+            Assert.That( text, Is.EqualTo( x ) );
         }
     }
 }
