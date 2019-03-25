@@ -77,7 +77,7 @@ namespace SWT_20_ATM
                     continue;
                 }
                 // Create log message
-                string msgToLog = string.Format( "{0:YYY:HH:mm:ss}: {1} and {2} Violates Separation condition!", DateTime.Now, oldPlanePair[0].Tag, oldPlanePair[1].Tag );
+                string msgToLog = string.Format( "{0:YYY:HH:mm:ss}: {1} and {2} no longer violates Separation condition!", DateTime.Now, oldPlanePair[0].Tag, oldPlanePair[1].Tag );
 
                 // Write log message to log
                 Logger?.AddToLog( msgToLog );
