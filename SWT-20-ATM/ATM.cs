@@ -5,23 +5,22 @@ namespace SWT_20_ATM
 {
     public class ATM
     {
-        private IAirspace _observableAirspace;
+        public IAirspace ObservableAirspace { get; private set; }       // Airspace to observe
+        public ILogger Logger { get; private set; }                     // Logger to log to
+        public IPlaneSeparation PlaneSeparator { get; private set; }    // PlaneSeparation Condition
 
-        private List<Plane> _planeList;
-        public List<Plane> PlaneList => _planeList;
+        public List<IPlane> PlaneList { get; private set; }                             // List to store current planes in   
+        public List<List<IPlane>> ConditionViolationSeparation { get; private set; }    // List to store violating planes
 
-        private List<List<IPlane>> ConditionViolation_Separation;
-        public ILogger Logger { get; set; }
 
-        // Rules
-        private PlaneSeparation _planeSeparator;
-
-        public ATM( IAirspace observableAirspace, int minVerticalDif, int minHorizontalDif )
+        public ATM( IAirspace observableAirspace, IPlaneSeparation planeSeparator, ILogger logger = null )
         {
-            _observableAirspace = observableAirspace;
-            _planeSeparator = new PlaneSeparation( minHorizontalDif, minVerticalDif );
+            ObservableAirspace = observableAirspace;
+            PlaneSeparator = planeSeparator;
+            Logger = logger;
 
-            ConditionViolation_Separation = new List<List<IPlane>>();
+            PlaneList = new List<IPlane>();
+            ConditionViolationSeparation = new List<List<IPlane>>();
         }
 
         public void UpdatePlaneList( List<IPlane> newPlaneList )
@@ -33,29 +32,32 @@ namespace SWT_20_ATM
             foreach ( var plane in newPlaneList )
             {
                 // Check if plane is within airspace
-                bool planeInAirspace = _observableAirspace.IsWithinArea( plane.XCoordinate, plane.YCoordinate, plane.Altitude );
-
+                bool planeInAirspace = ObservableAirspace.IsWithinArea( plane.XCoordinate, plane.YCoordinate, plane.Altitude );
+                PlaneList.Add( plane );
                 // Add plane to list if it's within the airspace
                 if ( planeInAirspace )
                 {
                     updatedPlaneList.Add( plane );
+
                 }
             }
 
 
             UpdateViolatingPlanes( updatedPlaneList );  // Update violating planes
+
+            PlaneList = updatedPlaneList;
         }
 
         private void UpdateViolatingPlanes( List<IPlane> updatedPlaneList )
         {
             // Check for violations
-            List<List<IPlane>> newViolatingPlaneList = _planeSeparator.CheckPlanes( updatedPlaneList );
+            List<List<IPlane>> newViolatingPlaneList = PlaneSeparator.CheckPlanes( updatedPlaneList );
 
 
             foreach ( var newPlanePair in newViolatingPlaneList )
             {
                 // If new plane-pair exist in old planelist then do nothing
-                if ( ConditionViolation_Separation.Contains( newPlanePair ) )
+                if ( ConditionViolationSeparation.Contains( newPlanePair ) )
                 {
                     continue;
                 }
@@ -67,7 +69,7 @@ namespace SWT_20_ATM
                 Logger?.AddToLog( msgToLog );
             }
 
-            foreach ( var oldPlanePair in ConditionViolation_Separation )
+            foreach ( var oldPlanePair in ConditionViolationSeparation )
             {
                 // If old plane-pair exist in new planelist then do nothing
                 if ( newViolatingPlaneList.Contains( oldPlanePair ) )
@@ -75,15 +77,15 @@ namespace SWT_20_ATM
                     continue;
                 }
                 // Create log message
-                string msgToLog = string.Format( "{0:YYY:HH:mm:ss}: {1} and {2} Violates Separation condition!", DateTime.Now, oldPlanePair[0].Tag, oldPlanePair[1].Tag );
+                string msgToLog = string.Format( "{0:YYY:HH:mm:ss}: {1} and {2} no longer violates Separation condition!", DateTime.Now, oldPlanePair[0].Tag, oldPlanePair[1].Tag );
 
                 // Write log message to log
                 Logger?.AddToLog( msgToLog );
             }
 
             // Update ConditionViolation_Separation to contain new errors 
-            ConditionViolation_Separation.Clear();
-            ConditionViolation_Separation = newViolatingPlaneList;
+            ConditionViolationSeparation.Clear();
+            ConditionViolationSeparation = newViolatingPlaneList;
         }
 
     }
