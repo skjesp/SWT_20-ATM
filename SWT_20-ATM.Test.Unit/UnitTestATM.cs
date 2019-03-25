@@ -13,16 +13,18 @@ namespace SWT_20_ATM.Test.Unit
         private ATM uut;
         private ILogger _logger;
         private IAirspace _airspace;
+        private IPlaneSeparation _planeSeparation;
 
         [SetUp]
         public void init()
         {
             _logger = NSubstitute.Substitute.For<ILogger>();
             _airspace = NSubstitute.Substitute.For<IAirspace>();
+            _planeSeparation = Substitute.For<IPlaneSeparation>();
 
 
             // Air Traffic Monitor
-            uut = new ATM( _airspace, 300, 5000 );
+            uut = new ATM( _airspace, _planeSeparation, _logger );
         }
 
 
