@@ -22,5 +22,6 @@ namespace SWT_20_ATM
         }
 
         string _filePath;
+        public string FilePath => _filePath;
     }
 }
