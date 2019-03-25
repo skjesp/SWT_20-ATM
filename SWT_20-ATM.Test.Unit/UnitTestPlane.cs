@@ -1,7 +1,7 @@
 ﻿using NSubstitute;
 using NUnit.Framework;
 using System;
-using Assert = Microsoft.VisualStudio.TestTools.UnitTesting.Assert;
+using Assert = NUnit.Framework.Assert;
 
 namespace SWT_20_ATM.Test.Unit
 {
