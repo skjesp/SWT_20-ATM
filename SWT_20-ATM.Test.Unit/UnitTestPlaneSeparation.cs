@@ -50,6 +50,7 @@ namespace SWT_20_ATM.Test.Unit
         [TestCase( 1000, 1000, 500, 6000, 1000, 500 )]    //Planes X-coordinates are just far enough to not trig Separation.
         [TestCase( 1000, 1000, 500, 1000, 6000, 500 )]    //Planes Y-coordinates are just far enough to not trig Separation.
         [TestCase( 1000, 1000, 500, 1000, 1000, 800 )]    //Planes Z-coordinates are just far enough to not trig Separation.
+
         public void PlanesNotTooClose( int x1, int y1, int z1, int x2, int y2, int z2 )
         {
             // Create two fake planes with the given parameters
@@ -61,7 +62,7 @@ namespace SWT_20_ATM.Test.Unit
             plane1.LastUpdate.Returns( DateTime.Today );
 
             IPlane plane2 = Substitute.For<IPlane>();
-            plane2.Tag.Returns( "AAA" );
+            plane2.Tag.Returns( "BBB" );
             plane2.XCoordinate.Returns( x2 );
             plane2.YCoordinate.Returns( y2 );
             plane2.Altitude.Returns( z2 );
@@ -69,8 +70,6 @@ namespace SWT_20_ATM.Test.Unit
 
             // Add planes to a list
             List<IPlane> testList = new List<IPlane> { plane1, plane2 };
-
-
             List<List<IPlane>> ReturnList = new List<List<IPlane>>();
 
             ReturnList = uut.CheckPlanes( testList );

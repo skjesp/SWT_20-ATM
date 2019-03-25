@@ -96,15 +96,32 @@ namespace SWT_20_ATM.Test.Unit
             invalidDirectionPlane.YCoordinate.Returns( 10000 );
             invalidDirectionPlane.LastUpdate.Returns( CorrectDateTime );
 
-            invalidDirectionPlane.Speed.Returns( Double.NaN );
-
-
+            invalidDirectionPlane.Direction.Returns( Double.NaN );
+            
             List<IPlane> planeWithNaNSpeed = new List<IPlane> { invalidSpeedPlane, invalidDirectionPlane };
 
             //No planes were added to EmptyPlaneList because all planes that was to be added were invalid.
             List<IPlane> emptyPlaneList = uut.GetCompletePlanes( planeWithNaNSpeed );
             Assert.IsEmpty( emptyPlaneList );
         }
+
+        //[TestCase]
+        //public void Receive2Inputs_Update_DirectionIsNaN()
+        //{
+        //    //Create fake Plane with Invalid Direction
+        //    IPlane invalidDirectionPlane = Substitute.For<IPlane>();
+        //    invalidDirectionPlane.Tag.Returns("TEST321");
+        //    invalidDirectionPlane.XCoordinate.Returns(10000);
+        //    invalidDirectionPlane.YCoordinate.Returns(10000);
+        //    invalidDirectionPlane.LastUpdate.Returns(CorrectDateTime);
+
+        //    invalidDirectionPlane.Speed.Returns(Double.NaN);
+        //    List<IPlane> planeWithNaNSpeed = new List<IPlane> { invalidSpeedPlane, invalidDirectionPlane };
+
+        //    //No planes were added to EmptyPlaneList because all planes that was to be added were invalid.
+        //    List<IPlane> emptyPlaneList = uut.GetCompletePlanes(planeWithNaNSpeed);
+        //    Assert.IsEmpty(emptyPlaneList);
+        //}
 
     }
 }
