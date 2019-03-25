@@ -68,9 +68,9 @@
     <Compile Include="Airspace\IAirspace.cs" />
     <Compile Include="Plane\IPlane.cs" />
     <Compile Include="Shapes\Cuboid.cs" />
-    <Compile Include="Decoder.cs" />
+    <Compile Include="Decoder\Decoder.cs" />
     <Compile Include="Logger\FileLogger.cs" />
-    <Compile Include="IDecoder.cs" />
+    <Compile Include="Decoder\IDecoder.cs" />
     <Compile Include="Logger\ILogger.cs" />
     <Compile Include="Rendition\IRendition.cs" />
     <Compile Include="Shapes\IShape.cs" />
