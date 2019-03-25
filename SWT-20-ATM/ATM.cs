@@ -7,10 +7,10 @@ namespace SWT_20_ATM
     {
         private IAirspace _observableAirspace;
 
-        private List<Plane> _planeList;
-        public List<Plane> PlaneList => _planeList;
+        public List<IPlane> PlaneList { get; private set; }
 
-        private List<List<IPlane>> ConditionViolation_Separation;
+        public List<List<IPlane>> ConditionViolationSeparation { get; private set; }
+
         public ILogger Logger { get; set; }
 
         // Rules
@@ -19,9 +19,10 @@ namespace SWT_20_ATM
         public ATM( IAirspace observableAirspace, int minVerticalDif, int minHorizontalDif )
         {
             _observableAirspace = observableAirspace;
+            PlaneList = new List<IPlane>();
             _planeSeparator = new PlaneSeparation( minHorizontalDif, minVerticalDif );
 
-            ConditionViolation_Separation = new List<List<IPlane>>();
+            ConditionViolationSeparation = new List<List<IPlane>>();
         }
 
         public void UpdatePlaneList( List<IPlane> newPlaneList )
@@ -34,16 +35,19 @@ namespace SWT_20_ATM
             {
                 // Check if plane is within airspace
                 bool planeInAirspace = _observableAirspace.IsWithinArea( plane.XCoordinate, plane.YCoordinate, plane.Altitude );
-
+                PlaneList.Add( plane );
                 // Add plane to list if it's within the airspace
                 if ( planeInAirspace )
                 {
                     updatedPlaneList.Add( plane );
+
                 }
             }
 
 
             UpdateViolatingPlanes( updatedPlaneList );  // Update violating planes
+
+            PlaneList = updatedPlaneList;
         }
 
         private void UpdateViolatingPlanes( List<IPlane> updatedPlaneList )
@@ -55,7 +59,7 @@ namespace SWT_20_ATM
             foreach ( var newPlanePair in newViolatingPlaneList )
             {
                 // If new plane-pair exist in old planelist then do nothing
-                if ( ConditionViolation_Separation.Contains( newPlanePair ) )
+                if ( ConditionViolationSeparation.Contains( newPlanePair ) )
                 {
                     continue;
                 }
@@ -67,7 +71,7 @@ namespace SWT_20_ATM
                 Logger?.AddToLog( msgToLog );
             }
 
-            foreach ( var oldPlanePair in ConditionViolation_Separation )
+            foreach ( var oldPlanePair in ConditionViolationSeparation )
             {
                 // If old plane-pair exist in new planelist then do nothing
                 if ( newViolatingPlaneList.Contains( oldPlanePair ) )
@@ -82,8 +86,8 @@ namespace SWT_20_ATM
             }
 
             // Update ConditionViolation_Separation to contain new errors 
-            ConditionViolation_Separation.Clear();
-            ConditionViolation_Separation = newViolatingPlaneList;
+            ConditionViolationSeparation.Clear();
+            ConditionViolationSeparation = newViolatingPlaneList;
         }
 
     }
