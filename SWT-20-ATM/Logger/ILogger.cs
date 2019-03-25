@@ -6,6 +6,6 @@
         /// Writes a message to a logger
         /// </summary>
         /// <param name="message"></param>
-        void AddToLog( string message );
+        bool AddToLog(string message);
     }
 }

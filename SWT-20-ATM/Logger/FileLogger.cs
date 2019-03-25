@@ -4,23 +4,39 @@ namespace SWT_20_ATM
 {
     public class FileLogger : ILogger
     {
-        public FileLogger(string filePath = "./SepLog.txt")
+        public StringWriter Writer { get; set; }
+
+        public bool UnderTest { get; set; }
+
+        public FileLogger(string filePath = "./SepLog.txt", StringWriter writer = null, bool underTest = false)
         {
             _filePath = filePath;
-            
+            UnderTest = underTest;
+
+            if ( writer == null ) Writer = new StringWriter();
         }
 
-        public void AddToLog(string SepToLog)
+
+        public bool AddToLog(string message)
         {
-            DateTime now = DateTime.Now;
+            var output = string.Format( "{0:YYY:HH:mm:ss}: {1}", DateTime.Now,  message);
 
-            File.Open(_filePath, FileMode.OpenOrCreate, FileAccess.ReadWrite);
+            if ( UnderTest )
+            {
+                Stream ourStream = File.Open(_filePath, FileMode.OpenOrCreate, FileAccess.ReadWrite);
+                Writer.WriteLine(output, ourStream);
 
-            StringWriter sw = new StringWriter();
-            sw.WriteLine(_filePath, SepToLog);
-            sw.Flush();
-            
-            Console.WriteLine("Logged seperation event to file: {0}", now);
+            }
+            else
+            {
+                String myString = "";
+                Writer.WriteLine(output, myString);
+            }
+
+            Writer.Flush();
+
+            //Console.WriteLine("Logged seperation event to file: {0}", DateTime.Now);
+            return true;
         }
 
         string _filePath;
