@@ -27,8 +27,13 @@ namespace SWT_20_ATM
             // Add area to airspace
             airspace.AddShape( new Cuboid( 0, 0, 500, 80000, 80000, 20000 ) );
 
+            IPlaneSeparation planeSeparator = new PlaneSeparation( 300, 500 );
+
+            // todo: give an actual filePath
+            ILogger logger = new FileLogger();
+
             // Air Traffic Monitor
-            ATM atm = new ATM( airspace, 300, 5000 );
+            ATM atm = new ATM( airspace, planeSeparator, logger );
 
             myDecoder.NewPlanesEvent += atm.UpdatePlaneList;
 
