@@ -4,7 +4,7 @@ namespace SWT_20_ATM
 {
     public class Plane : IPlane
     {
-        public Plane( string tag, int xCor, int yCor, int altitude, DateTime time )
+        public Plane(string tag, int xCor, int yCor, int altitude, DateTime time)
         {
             _tag = tag;
             _xCoordinate = xCor;
@@ -38,7 +38,7 @@ namespace SWT_20_ATM
 
 
 
-        public bool Update( IPlane oldPlane )
+        public bool Update(IPlane oldPlane)
         {
             // Do not update if tags doesn't match
             if ( this.Tag != oldPlane.Tag )
@@ -53,18 +53,18 @@ namespace SWT_20_ATM
             }
 
             // Calculate direction
-            _direction = Calculator.GetDirection2D( oldPlane.XCoordinate, oldPlane.YCoordinate, XCoordinate, YCoordinate );
+            _direction = Calculator.GetDirection2D(oldPlane.XCoordinate, oldPlane.YCoordinate, XCoordinate, YCoordinate);
 
             try
             {
                 // Calculate speed
-                _speed = Calculator.GetSpeed( oldPlane.XCoordinate, oldPlane.YCoordinate, oldPlane.LastUpdate,
+                _speed = Calculator.GetSpeed(oldPlane.XCoordinate, oldPlane.YCoordinate, oldPlane.LastUpdate,
                                             XCoordinate, YCoordinate, LastUpdate
                                             );
             }
             catch ( Exception e )
             {
-                Console.WriteLine( e );
+                //Console.WriteLine( e );
                 return false;
             }
 

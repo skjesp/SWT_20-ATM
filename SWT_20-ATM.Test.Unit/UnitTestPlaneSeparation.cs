@@ -6,7 +6,7 @@ using System.Collections.Generic;
 namespace SWT_20_ATM.Test.Unit
 {
     [TestFixture]
-    class UnitTestPlaneSeparation
+    internal class UnitTestPlaneSeparation
     {
         private PlaneSeparation uut;
 
@@ -38,13 +38,20 @@ namespace SWT_20_ATM.Test.Unit
             plane2.Altitude.Returns( z2 );
             plane2.LastUpdate.Returns( DateTime.Today );
 
+            IPlane plane3 = Substitute.For<IPlane>();
+            plane3.Tag.Returns( "BBB" );
+            plane3.XCoordinate.Returns( x2 );
+            plane3.YCoordinate.Returns( y2 );
+            plane3.Altitude.Returns( z2 );
+            plane3.LastUpdate.Returns( DateTime.Today );
+
             // Add planes them to a list
-            List<IPlane> testList = new List<IPlane> { plane1, plane2 };
+            List<IPlane> testList = new List<IPlane> { plane1, plane2, plane3 };
 
             List<List<IPlane>> returnList = uut.CheckPlanes( testList );
 
             // Check if plane is close enough
-            Assert.That( returnList[0][0].Tag, Is.EqualTo( testList[0].Tag ) );
+            Assert.That( returnList[ 0 ][ 0 ].Tag, Is.EqualTo( testList[ 0 ].Tag ) );
         }
 
         [TestCase( 1000, 1000, 500, 6000, 1000, 500 )]    //Planes X-coordinates are just far enough to not trig Separation.

@@ -8,29 +8,30 @@ namespace SWT_20_ATM
 
         public bool UnderTest { get; set; }
 
-        public FileLogger(string filePath = "./SepLog.txt", StringWriter writer = null, bool underTest = false)
+        public FileLogger( string filePath = "./SepLog.txt", StringWriter writer = null, bool underTest = false )
         {
             _filePath = filePath;
             UnderTest = underTest;
 
-            if ( writer == null ) Writer = new StringWriter();
+            if ( writer == null )
+                Writer = new StringWriter();
         }
 
 
-        public bool AddToLog(string message)
+        public bool AddToLog( string message )
         {
-            var output = string.Format( "{0:YYY:HH:mm:ss}: {1}", DateTime.Now,  message);
+            var output = string.Format( "{0:YYY:HH:mm:ss}: {1}", DateTime.Now, message );
 
             if ( UnderTest )
             {
-                Stream ourStream = File.Open(_filePath, FileMode.OpenOrCreate, FileAccess.ReadWrite);
-                Writer.WriteLine(output, ourStream);
+                Stream ourStream = File.Open( _filePath, FileMode.OpenOrCreate, FileAccess.ReadWrite );
+                Writer.WriteLine( output, ourStream );
 
             }
             else
             {
                 String myString = "";
-                Writer.WriteLine(output, myString);
+                Writer.WriteLine( output, myString );
             }
 
             Writer.Flush();
@@ -39,7 +40,7 @@ namespace SWT_20_ATM
             return true;
         }
 
-        string _filePath;
+        private string _filePath;
         public string FilePath => _filePath;
     }
 }

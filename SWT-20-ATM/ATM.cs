@@ -8,16 +8,21 @@ namespace SWT_20_ATM
         public IAirspace ObservableAirspace { get; private set; }       // Airspace to observe
         public ILogger Logger { get; private set; }                     // Logger to log to
         public IPlaneSeparation PlaneSeparator { get; private set; }    // PlaneSeparation Condition
+        public IRendition RenditionOutputter { get; private set; }      // Object to render output
 
         public List<IPlane> PlaneList { get; private set; }                             // List to store current planes in   
         public List<List<IPlane>> ConditionViolationSeparation { get; private set; }    // List to store violating planes
 
 
-        public ATM( IAirspace observableAirspace, IPlaneSeparation planeSeparator, ILogger logger = null )
+        public ATM( IAirspace observableAirspace,
+                    IPlaneSeparation planeSeparator,
+                    IRendition renditionOutputter,
+                    ILogger logger = null )
         {
             ObservableAirspace = observableAirspace;
             PlaneSeparator = planeSeparator;
             Logger = logger;
+            RenditionOutputter = renditionOutputter;
 
             PlaneList = new List<IPlane>();
             ConditionViolationSeparation = new List<List<IPlane>>();
@@ -46,6 +51,8 @@ namespace SWT_20_ATM
             UpdateViolatingPlanes( updatedPlaneList );  // Update violating planes
 
             PlaneList = updatedPlaneList;
+
+            RenditionOutputter.RenderPlanes( PlaneList );
         }
 
         private void UpdateViolatingPlanes( List<IPlane> updatedPlaneList )
@@ -63,7 +70,7 @@ namespace SWT_20_ATM
                 }
 
                 // Create log message
-                string msgToLog = string.Format( "{0:YYY:HH:mm:ss}: {1} and {2} Violates Separation condition!", DateTime.Now, newPlanePair[0].Tag, newPlanePair[1].Tag );
+                string msgToLog = string.Format( "{0:YYY:HH:mm:ss}: {1} and {2} Violates Separation condition!", DateTime.Now, newPlanePair[ 0 ].Tag, newPlanePair[ 1 ].Tag );
 
                 // Write log message to log
                 Logger?.AddToLog( msgToLog );
@@ -77,7 +84,7 @@ namespace SWT_20_ATM
                     continue;
                 }
                 // Create log message
-                string msgToLog = string.Format( "{0:YYY:HH:mm:ss}: {1} and {2} no longer violates Separation condition!", DateTime.Now, oldPlanePair[0].Tag, oldPlanePair[1].Tag );
+                string msgToLog = string.Format( "{0:YYY:HH:mm:ss}: {1} and {2} no longer violates Separation condition!", DateTime.Now, oldPlanePair[ 0 ].Tag, oldPlanePair[ 1 ].Tag );
 
                 // Write log message to log
                 Logger?.AddToLog( msgToLog );
@@ -86,6 +93,8 @@ namespace SWT_20_ATM
             // Update ConditionViolation_Separation to contain new errors 
             ConditionViolationSeparation.Clear();
             ConditionViolationSeparation = newViolatingPlaneList;
+
+            RenditionOutputter.RenderViolations( ConditionViolationSeparation );
         }
 
     }

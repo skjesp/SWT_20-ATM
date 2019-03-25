@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using TransponderReceiver;
 
 
@@ -33,10 +30,10 @@ namespace SWT_20_ATM
             TransponderDataList.Clear();
             // Just display data
             //System.Console.WriteLine("New data");
-            foreach (var data in e.TransponderData)
+            foreach ( var data in e.TransponderData )
             {
                 TransponderDataList.Add(data);
-                System.Console.WriteLine($"Transponderdata {data}");
+                //System.Console.WriteLine($"Transponderdata {data}");
             }
 
             // Call Event

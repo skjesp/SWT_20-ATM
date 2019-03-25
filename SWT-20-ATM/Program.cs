@@ -6,7 +6,7 @@ namespace SWT_20_ATM
 {
     class Program
     {
-        static void Main( string[] args )
+        static void Main(string[] args)
         {
 
             // Using the real transponder data receiver
@@ -25,15 +25,18 @@ namespace SWT_20_ATM
             IAirspace airspace = new Airspace();
 
             // Add area to airspace
-            airspace.AddShape( new Cuboid( 0, 0, 500, 80000, 80000, 20000 ) );
+            airspace.AddShape(new Cuboid(0, 0, 500, 80000, 80000, 20000));
 
-            IPlaneSeparation planeSeparator = new PlaneSeparation( 300, 500 );
+            IPlaneSeparation planeSeparator = new PlaneSeparation( 5000, 300 );
 
-            // todo: give an actual filePath
-            ILogger logger = new FileLogger();
+
+            ILogger logger = new FileLogger("./Logger.txt");
+
+            IRendition renderObject = new Konsol();
+
 
             // Air Traffic Monitor
-            ATM atm = new ATM( airspace, planeSeparator, logger );
+            ATM atm = new ATM( airspace, planeSeparator, renderObject, logger );
 
             myDecoder.NewPlanesEvent += atm.UpdatePlaneList;
 
@@ -41,7 +44,7 @@ namespace SWT_20_ATM
             // Let the real TDR execute in the background
             while ( true )
             {
-                Thread.Sleep( 1000 );
+                Thread.Sleep(1000);
             }
         }
     }

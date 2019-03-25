@@ -26,8 +26,9 @@ namespace SWT_20_ATM
 
             foreach ( var plane in planeList )
             {
-                foreach ( var comparePlane in planeList )
+                for ( int i = planeList.IndexOf( plane ) + 1; i < ( planeList.Count ); i++ )
                 {
+                    var comparePlane = planeList[ i ];
                     if ( plane.Tag == comparePlane.Tag )
                     {
                         continue;    // Do nothing if plane being compared is the same
@@ -54,7 +55,6 @@ namespace SWT_20_ATM
                     };
 
                     violatingPlanes.Add( violatingPlanePair );
-
                 }
             }
             return violatingPlanes;

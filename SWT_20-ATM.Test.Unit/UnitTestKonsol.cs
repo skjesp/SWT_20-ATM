@@ -9,50 +9,58 @@ namespace SWT_20_ATM.Test.Unit
 {
 
     [TestFixture]
-    class UnitTestKonsol
+    internal class UnitTestKonsol
     {
-        private Konsol uut;
-        private StringWriter Writer;
-        private IPlane Plane1;
-        private IPlane Plane2;
-        private List<IPlane> Planes;
+        private Konsol _uut;
+        private StringWriter _writer;
+        private IPlane _plane1;
+        private IPlane _plane2;
+        private List<IPlane> _planes;
+        private List<List<IPlane>> _planesViolating;
 
         [SetUp]
         public void Init()
         {
-            uut = new Konsol();
-            Writer = new StringWriter();
+            _uut = new Konsol();
+            _writer = new StringWriter();
 
             //Sets stdoutput for Console.WriteLine to Writer.
-            Console.SetOut( Writer );
+            Console.SetOut( _writer );
 
             // Fake Plane Creation
             //Plane 1 is still, Plane 2 is moving.
-            Plane1 = Substitute.For<IPlane>();
-            Plane2 = Substitute.For<IPlane>();
+            _plane1 = Substitute.For<IPlane>();
+            _plane2 = Substitute.For<IPlane>();
 
-            Plane1.Tag.Returns( "Test1" );
-            Plane1.XCoordinate.Returns( 10000 );
-            Plane1.YCoordinate.Returns( 10000 );
-            Plane1.Altitude.Returns( 10000 );
-            Plane1.LastUpdate.Returns( DateTime.Now );
+            _plane1.Tag.Returns( "Test1" );
+            _plane1.XCoordinate.Returns( 10000 );
+            _plane1.YCoordinate.Returns( 10000 );
+            _plane1.Altitude.Returns( 10000 );
+            _plane1.LastUpdate.Returns( DateTime.Now );
 
-            Plane2.Tag.Returns( "Test2" );
-            Plane2.XCoordinate.Returns( 10000 );
-            Plane2.YCoordinate.Returns( 10000 );
-            Plane2.Altitude.Returns( 10000 );
-            Plane2.LastUpdate.Returns( DateTime.Now );
-            Plane2.Speed.Returns( 500.0 );          // <- Indicate plane is moving
+            _plane2.Tag.Returns( "Test2" );
+            _plane2.XCoordinate.Returns( 10000 );
+            _plane2.YCoordinate.Returns( 10000 );
+            _plane2.Altitude.Returns( 10000 );
+            _plane2.LastUpdate.Returns( DateTime.Now );
+            _plane2.Speed.Returns( 500.0 );          // <- Indicate plane is moving
 
-            Planes = new List<IPlane> { Plane1, Plane2 };
+
+
+            _planes = new List<IPlane> { _plane1, _plane2 };
+
+            List<IPlane> planePair = new List<IPlane>{_plane1, _plane2};
+            _planesViolating = new List<List<IPlane>> { planePair };
+
+
         }
 
         [TestCase]
         public void RenderPlanes()
         {
-            uut.RenderPlanes( Planes );
+            _uut.RenderPlanes( _planes );
 
-            string teststring = Writer.ToString();
+            string teststring = _writer.ToString();
             string expectedOutput = "Test1: Coordinates x-y: 10000-10000 Altitude: 10000\r\nTest2: Coordinates x-y: 10000-10000 Altitude: 10000 Velocity: 500 Compass course: 0\r\n";
             Assert.AreEqual( teststring, expectedOutput );
         }
@@ -61,9 +69,9 @@ namespace SWT_20_ATM.Test.Unit
         [TestCase]
         public void Render2ViolatingPlanes()
         {
-            uut.RenderViolations( Planes );
+            _uut.RenderViolations( _planesViolating );
 
-            string teststring = Writer.ToString();
+            string teststring = _writer.ToString();
             string expectedOutput = "The Planes Test1, Test2 has violated the Separation rule.\r\n";
             Assert.AreEqual( expectedOutput, teststring );
         }
@@ -71,10 +79,10 @@ namespace SWT_20_ATM.Test.Unit
         [TestCase]
         public void Render1ViolatingPlane()
         {
-            Planes.RemoveAt( 1 );
-            uut.RenderViolations( Planes );
+            _planesViolating[ 0 ].RemoveAt( 1 );
+            _uut.RenderViolations( _planesViolating );
 
-            string teststring = Writer.ToString();
+            string teststring = _writer.ToString();
             string expectedOutput = "The Plane Test1 has violated the Separation rule.\r\n";
             Assert.AreEqual( expectedOutput, teststring );
         }
