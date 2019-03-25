@@ -5,23 +5,21 @@ namespace SWT_20_ATM
 {
     public class ATM
     {
-        private IAirspace _observableAirspace;
+        public IAirspace ObservableAirspace { get; private set; }       // Airspace to observe
+        public ILogger Logger { get; private set; }                     // Logger to log to
+        public IPlaneSeparation PlaneSeparator { get; private set; }    // PlaneSeparation Condition
 
-        public List<IPlane> PlaneList { get; private set; }
+        public List<IPlane> PlaneList { get; private set; }                             // List to store current planes in   
+        public List<List<IPlane>> ConditionViolationSeparation { get; private set; }    // List to store violating planes
 
-        public List<List<IPlane>> ConditionViolationSeparation { get; private set; }
 
-        public ILogger Logger { get; set; }
-
-        // Rules
-        private PlaneSeparation _planeSeparator;
-
-        public ATM( IAirspace observableAirspace, int minVerticalDif, int minHorizontalDif )
+        public ATM( IAirspace observableAirspace, IPlaneSeparation planeSeparator, ILogger logger = null )
         {
-            _observableAirspace = observableAirspace;
-            PlaneList = new List<IPlane>();
-            _planeSeparator = new PlaneSeparation( minHorizontalDif, minVerticalDif );
+            ObservableAirspace = observableAirspace;
+            PlaneSeparator = planeSeparator;
+            Logger = logger;
 
+            PlaneList = new List<IPlane>();
             ConditionViolationSeparation = new List<List<IPlane>>();
         }
 
@@ -34,7 +32,7 @@ namespace SWT_20_ATM
             foreach ( var plane in newPlaneList )
             {
                 // Check if plane is within airspace
-                bool planeInAirspace = _observableAirspace.IsWithinArea( plane.XCoordinate, plane.YCoordinate, plane.Altitude );
+                bool planeInAirspace = ObservableAirspace.IsWithinArea( plane.XCoordinate, plane.YCoordinate, plane.Altitude );
                 PlaneList.Add( plane );
                 // Add plane to list if it's within the airspace
                 if ( planeInAirspace )
@@ -53,7 +51,7 @@ namespace SWT_20_ATM
         private void UpdateViolatingPlanes( List<IPlane> updatedPlaneList )
         {
             // Check for violations
-            List<List<IPlane>> newViolatingPlaneList = _planeSeparator.CheckPlanes( updatedPlaneList );
+            List<List<IPlane>> newViolatingPlaneList = PlaneSeparator.CheckPlanes( updatedPlaneList );
 
 
             foreach ( var newPlanePair in newViolatingPlaneList )
