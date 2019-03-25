@@ -3,6 +3,7 @@ using NSubstitute;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Assert = Microsoft.VisualStudio.TestTools.UnitTesting.Assert;
 
 namespace SWT_20_ATM.Test.Unit
@@ -16,12 +17,16 @@ namespace SWT_20_ATM.Test.Unit
         private IPlaneSeparation _planeSeparation;
 
         [SetUp]
-        public void init()
+        public void Init()
         {
             _logger = NSubstitute.Substitute.For<ILogger>();
             _airspace = NSubstitute.Substitute.For<IAirspace>();
-            _planeSeparation = Substitute.For<IPlaneSeparation>();
 
+            _planeSeparation = Substitute.For<IPlaneSeparation>();
+            _planeSeparation.CheckPlanes( Arg.Any<List<IPlane>>() ).Returns( new List<List<IPlane>>() );
+
+            // Todo: delete comment
+            //_planeSeparation = new PlaneSeparation( 500, 3000 );
 
             // Air Traffic Monitor
             uut = new ATM( _airspace, _planeSeparation, _logger );
@@ -108,7 +113,7 @@ namespace SWT_20_ATM.Test.Unit
         public void test_UpdatePlaneList_AddsPlaneIfInAirspace()
         {
             var planeList = new List<IPlane>();
-
+            
 
             IPlane newPlane = GetDummyIPlane();
             planeList.Add( newPlane );
@@ -147,10 +152,100 @@ namespace SWT_20_ATM.Test.Unit
         #endregion
 
         #region UpdateViolatingPlanes_UnitTest
-
-        public void UpdateViolatingPlanes_findsCorrectPairs()
+        [TestCase]
+        public void UpdateViolatingPlanes_Calls_PlaneSeparatorCheckPlanes_withCorrectArgs()
         {
+            // Create dummyPlanes
+            IPlane plane1 = GetDummyIPlane();
 
+            // Add dummyPlanes to a list
+            List<IPlane> planeList = new List<IPlane> { plane1 };
+
+            // Make sure airspace always returns true so all given planes will be passed to UpdateViolatingPlanes()
+            _airspace.IsWithinArea( 0, 0, 0 ).ReturnsForAnyArgs( true );
+
+            uut.UpdatePlaneList( planeList );
+
+            // Check that the argument was of the correct type
+            _planeSeparation.Received().CheckPlanes( Arg.Any<List<IPlane>>() );
+        }
+
+        [TestCase]
+        public void UpdateViolatingPlanes_Calls_AddToLog_withCorrectArgs_WhenNewViolationFound()
+        {
+            // Make sure airspace always returns true so all given planes will be passed to UpdateViolatingPlanes()
+            _airspace.IsWithinArea( 0, 0, 0 ).ReturnsForAnyArgs( true );
+
+
+            // Create dummyPlanes
+            IPlane plane1 = GetDummyIPlane();
+            IPlane plane2 = GetDummyIPlane();
+
+            List<List<IPlane>> planeVIolationList = new List<List<IPlane>>();
+            List<IPlane> planePair = new List<IPlane> { plane1, plane2 };
+
+            planeVIolationList.Add( planePair );
+
+
+            _planeSeparation.CheckPlanes( Arg.Any<List<IPlane>>() ).Returns( planeVIolationList );
+
+
+
+            // Just to run code parameter does not matter
+            uut.UpdatePlaneList( new List<IPlane>() );      // First time should run addToLog since planes is new
+            uut.UpdatePlaneList( new List<IPlane>() );      // Second time nothing should happen sinces planes already exists
+
+            // Get all _loggers Received calls from AddToLog where string argument matched 
+            // Code example found at: https://stackoverflow.com/questions/52439697/how-to-check-any-of-multiple-overloads-called-nsubstitute
+            // Answer posted by: David Tchepak sep 22'18
+            var calls = _logger.ReceivedCalls()
+                         .Where( x => x.GetMethodInfo().Name == nameof( _logger.AddToLog ) )
+                         .Where( x => ( (string) x.GetArguments()[0] ).Contains( "Violates Separation condition!" ) );
+
+            // Check if number of expected arguments was found
+            Assert.AreEqual( 1, calls.Count() );
+        }
+
+        [TestCase]
+        public void UpdateViolatingPlanes_Calls_AddToLog_withCorrectArgs_WhenViolationFoundDissapeared()
+        {
+            // Make sure airspace always returns true so all given planes will be passed to UpdateViolatingPlanes()
+            _airspace.IsWithinArea( 0, 0, 0 ).ReturnsForAnyArgs( true );
+
+
+            // Create dummyPlanes
+            IPlane plane1 = GetDummyIPlane();
+            IPlane plane2 = GetDummyIPlane();
+
+            // PlaneViolationList Containing planes
+            List<List<IPlane>> planeVIolationList = new List<List<IPlane>>();
+            List<IPlane> planePair = new List<IPlane> { plane1, plane2 };
+            planeVIolationList.Add( planePair );
+
+            // PlaneViolationList containing no planes
+            List<List<IPlane>> EmptyplaneViolationList = new List<List<IPlane>>();
+
+            _planeSeparation.CheckPlanes( Arg.Any<List<IPlane>>() ).Returns( planeVIolationList );
+
+
+
+            // Just to run code parameter does not matter
+            uut.UpdatePlaneList( new List<IPlane>() );      // First time should run addToLog since planes is new
+
+
+            _planeSeparation.CheckPlanes( Arg.Any<List<IPlane>>() ).Returns( EmptyplaneViolationList );
+
+            uut.UpdatePlaneList( new List<IPlane>() );      // Second time violation disappeared
+
+            // Get all _loggers Received calls from AddToLog where string argument matched 
+            // Code example found at: https://stackoverflow.com/questions/52439697/how-to-check-any-of-multiple-overloads-called-nsubstitute
+            // Answer posted by: David Tchepak sep 22'18
+            var calls = _logger.ReceivedCalls()
+                .Where( x => x.GetMethodInfo().Name == nameof( _logger.AddToLog ) )
+                .Where( x => ( (string) x.GetArguments()[0] ).Contains( "no longer violates Separation condition!" ) );
+
+            // Check if number of expected arguments was found
+            Assert.AreEqual( 1, calls.Count() );
         }
 
 
