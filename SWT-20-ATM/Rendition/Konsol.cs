@@ -23,32 +23,36 @@ namespace SWT_20_ATM
             }
         }
 
-        public void RenderViolations( List<IPlane> offenderPlanes, string violation = "Separation" )
+        public void RenderViolations( List<List<IPlane>> offenderPlanes, string violation = "Separation" )
         {
-            if ( offenderPlanes.Count == 1 )
+            foreach (List<IPlane> Pair in offenderPlanes)
             {
-                Console.Write( "The Plane " + offenderPlanes[0].Tag );
-            }
-            else
-            {
-                //Console.Write("The Planes " + offenderPlanes[0].Tag);,
-                Console.Write( "The Planes " );
-                foreach ( IPlane Plane in offenderPlanes )
+                if (Pair.Count == 1)
                 {
-                    if ( offenderPlanes.Last() == Plane )
-                    {
-                        Console.Write( Plane.Tag );
-                    }
-                    else
-                    {
-                        Console.Write( Plane.Tag + ", " );
-                    }
-
-
+                    Console.Write("The Plane " + Pair[0].Tag);
                 }
-            }
+                else
+                {
+                    //Console.Write("The Planes " + offenderPlanes[0].Tag);,
+                    Console.Write("The Planes ");
+                    foreach (IPlane Plane in Pair)
+                    {
+                        if (Pair.Last() == Plane)
+                        {
+                            Console.Write(Plane.Tag);
+                        }
+                        else
+                        {
+                            Console.Write(Plane.Tag + ", ");
+                        }
 
-            Console.WriteLine( " has violated the " + violation + " rule." );
+
+                    }
+                }
+
+                Console.WriteLine(" has violated the " + violation + " rule.");
+            }
+            
         }
     }
 }
