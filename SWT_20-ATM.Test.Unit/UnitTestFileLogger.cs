@@ -14,7 +14,7 @@ namespace SWT_20_ATM.Test.Unit
             uut = new FileLogger();
         }
         [TestCase( @"C:\Users\SepLog.txt" )]
-        void ReceivePath_Constructor( string x )
+        public void ReceivePath_Constructor( string x )
         {
             uut = new FileLogger( x );
             
@@ -31,7 +31,7 @@ namespace SWT_20_ATM.Test.Unit
 
         [TestCase( "Test String 1" )]
         [TestCase( "Test String 2" )]
-        void AddToLog_Test( string x )
+        public void AddToLog_Test( string x )
         {
             uut.AddToLog( x );
             string text = File.ReadAllText( "../SepLog.txt" );
