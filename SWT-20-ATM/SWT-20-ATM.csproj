@@ -66,6 +66,7 @@
     <Compile Include="ATM.cs" />
     <Compile Include="Calculator.cs" />
     <Compile Include="Airspace\IAirspace.cs" />
+    <Compile Include="PlaneSeparation\IPlaneSeparation.cs" />
     <Compile Include="Plane\IPlane.cs" />
     <Compile Include="Shapes\Cuboid.cs" />
     <Compile Include="Decoder\Decoder.cs" />
@@ -76,7 +77,7 @@
     <Compile Include="Shapes\IShape.cs" />
     <Compile Include="Rendition\Konsol.cs" />
     <Compile Include="Plane\Plane.cs" />
-    <Compile Include="Plane\PlaneSeparation.cs" />
+    <Compile Include="PlaneSeparation\PlaneSeparation.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="TransponderReceiverClient.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
